@@ -11,9 +11,9 @@
   import {Vue, Component} from 'vue-property-decorator';
 
   @Component
-  export default class Notes extends Vue{
-  value = '';
-}
+  export default class Notes extends Vue {
+    value = '';
+  }
 </script>
 
 <style lang="scss" scoped>
