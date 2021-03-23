@@ -28,6 +28,8 @@
       } else {
         this.selectedTags.push(tag);
       }
+      // 选中或取消选中标签后，触发 update:value 事件，并将 selectedTags 的值传给 Money 组件 onUpdateTags 函数的第一个参数
+      this.$emit('update:value', this.selectedTags)
     }
     create() {
       const name = window.prompt('请输入标签名'); // 点击"新增标签"，弹出输入对话框，并把输入的内容赋值给 name
