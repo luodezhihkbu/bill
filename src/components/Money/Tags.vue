@@ -18,10 +18,10 @@
 
   @Component
   export default class Tags extends Vue {
-    @Prop() readonly dataSource: string[] | undefined; // 类型为字符串数组或 undefined; readonly 表示数据不能修改
+    @Prop() readonly dataSource!: string[]; // 类型为字符串数组,且忽略空值; readonly 表示数据不能修改
     selectedTags: string[] = [];
     // 如果标签没有被选中，点击后选中；如果标签已经选中，点击后取消选中
-    toggle(tag) {
+    toggle(tag: string) {
       const index = this.selectedTags.indexOf(tag);
       if (index >= 0) {
         this.selectedTags.splice(index, 1);

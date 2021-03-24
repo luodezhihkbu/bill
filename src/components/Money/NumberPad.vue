@@ -27,7 +27,8 @@
   export default class NumberPad extends Vue {
     output = '0';
     inputContent(event: MouseEvent) { // event 为鼠标事件
-      const input = event.target.textContent; // 获取点击的数字
+      const button = (event.target as HTMLButtonElement); // 把 button 强制作为 Button 元素
+      const input = button.textContent!; // 获取点击的数字
       if (this.output.length === 16) {
         return;
       }
