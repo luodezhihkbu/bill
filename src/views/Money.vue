@@ -19,6 +19,7 @@
     notes: string;
     type: string;
     amount: string;
+    createAT?: Date; // ? 表示这个属性可以不存在
   }
 
   const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
@@ -43,6 +44,7 @@
     }
     SaveRecord() {
       const record2: Record = JSON.parse(JSON.stringify(this.record)); // 深拷贝
+      record2.createAT = new Date();
       this.recordList.push(record2);
     }
     @Watch('recordList')
