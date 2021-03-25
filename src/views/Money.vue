@@ -22,7 +22,8 @@
     createAT?: Date; // ? 表示这个属性可以不存在
   }
 
-  const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
+  const model = require('@/model.js').default; // 导入 js 文件到 ts 文件中
+  const recordList: Record[] = model.fetch();
 
   @Component({
     components: {Tags, Notes, Types, NumberPad},
@@ -49,7 +50,7 @@
     }
     @Watch('recordList')
     onRecordListChanged() {
-      window.localStorage.setItem('recordList', JSON.stringify(this.recordList));
+      model.save(this.recordList);
     }
   }
 </script>
