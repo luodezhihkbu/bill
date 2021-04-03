@@ -1,18 +1,20 @@
 <template>
   <div>
     <label class="notes">
-      <span class="name">备注</span>
-      <input type="text" v-model="value" placeholder="在这里添加备注">
+      <span class="name">{{ this.fieldName }}</span>
+      <input type="text" v-model="value" :placeholder="this.placeholder">
     </label>
   </div>
 </template>
 
 <script lang="ts">
-  import {Vue, Component, Watch} from 'vue-property-decorator';
+  import {Vue, Component, Watch, Prop} from 'vue-property-decorator';
 
   @Component
   export default class Notes extends Vue {
     value = '';
+    @Prop({required: true}) fieldName!: string; // required: true 表示外部必须传一个值给 fieldName。! 表示值可以为空值
+    @Prop() placeholder?: string; // ? 表示值可以不存在
     @Watch('value')
     onValueChanged(value: string) {
       this.$emit('update:value', value);
