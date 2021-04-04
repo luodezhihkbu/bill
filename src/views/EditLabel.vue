@@ -39,11 +39,17 @@
       }
     }
     update(name: string) {
-      tagListModel.update(this.tag.id, name);
+      if (this.tag) {
+        tagListModel.update(this.tag.id, name);
+      }
     }
     remove() {
-      if (tagListModel.remove(this.tag.id)) {
-        this.$router.back();
+      if (this.tag) {
+        if (tagListModel.remove(this.tag.id)) {
+          this.$router.back();
+        } else {
+          window.alert('删除失败');
+        }
       }
     }
     goBack() {
