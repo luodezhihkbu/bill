@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label class="notes">
+    <label class="formIte">
       <span class="name">{{ this.fieldName }}</span>
       <input type="text" v-model="value" :placeholder="this.placeholder">
     </label>
@@ -11,7 +11,7 @@
   import {Vue, Component, Watch, Prop} from 'vue-property-decorator';
 
   @Component
-  export default class Notes extends Vue {
+  export default class FormItem extends Vue {
     value = '';
     @Prop({required: true}) fieldName!: string; // required: true 表示外部必须传一个值给 fieldName。! 表示值可以为空值
     @Prop() placeholder?: string; // ? 表示值可以不存在
@@ -23,7 +23,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .notes {
+  .formIte {
     font-size: 14px;
     background: #f5f5f5;
     display: flex;
