@@ -4,5 +4,5 @@ type RecordItem = {
   notes: string;
   type: string;
   amount: string;
-  createAT?: Date; // ? 表示这个属性可以不存在
+  createdAt?: Date; // ? 表示这个属性可以不存在
 }

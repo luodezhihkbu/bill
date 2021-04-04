@@ -39,13 +39,11 @@
       this.record.amount = value;
     }
     SaveRecord() {
-      const record2 = recordListModel.clone(this.record); // 深拷贝
-      record2.createAT = new Date();
-      this.recordList.push(record2);
+      recordListModel.create(this.record);
     }
     @Watch('recordList')
     onRecordListChanged() {
-      recordListModel.save(this.recordList);
+      recordListModel.save();
     }
   }
 </script>
