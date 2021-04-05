@@ -15,13 +15,14 @@
   import Tags from '@/components/Money/Tags.vue';
   import {Vue, Component} from 'vue-property-decorator';
   import FormItem from '@/components/Money/FormItem.vue';
+  import store from '@/store/index2';
 
   @Component({
     components: {FormItem, Tags, Types, NumberPad},
   })
   export default class Money extends Vue {
-    tags = window.tagList; // 标签数据从 tagListModel 获取
-    recordList = window.recordList;
+    tags = store.tagList; // 标签数据从 tagListModel 获取
+    recordList = store.recordList;
     record: RecordItem = {
       tags: [], notes: '', type: '-', amount: '0'
     };
@@ -35,7 +36,7 @@
       this.record.amount = value;
     }
     SaveRecord() {
-      window.createRecord(this.record);
+      store.createRecord(this.record);
     }
   }
 </script>
