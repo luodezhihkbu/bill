@@ -13,6 +13,9 @@ Vue.component('Nav', Nav);
 Vue.component('Layout', Layout);
 Vue.component('Icon', Icon);
 window.tagList = tagListModel.fetch(); // 声明全局的 tagList
+window.findTag = (id) => {
+  return window.tagList.filter(item => item.id === id)[0];
+};
 window.createTag = (name) => {
   const message = tagListModel.create(name);
   if (message === 'duplicated') {
@@ -21,6 +24,12 @@ window.createTag = (name) => {
     window.alert('添加成功');
   }
 };
+window.removeTag = (id) => {
+  return tagListModel.remove(id);
+};
+window.updateTag = (id, name) => {
+  return tagListModel.update(id, name);
+}
 new Vue({
   router,
   store,

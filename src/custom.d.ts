@@ -21,5 +21,8 @@ type TagListModel = {
 // 给 Window 添加接口 tagList
 interface Window {
   tagList: Tag[];
+  findTag: (id: string) => Tag | undefined;
   createTag: (name: string) => void;
+  removeTag: (id: string) => boolean;
+  updateTag: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
 }
