@@ -51,6 +51,7 @@
     padding: 16px;
     display: flex;
     flex-direction: column-reverse;
+    flex-grow: 1;
     .current {
       display: flex;
       flex-wrap: wrap;
@@ -63,6 +64,7 @@
         text-align: center;
         padding: 0 16px;
         margin-right: 12px;
+        margin-top: 4px;
         &.selected {
           background: darken($bg, 50%);
           color: white;
