@@ -13,6 +13,14 @@ Vue.component('Nav', Nav);
 Vue.component('Layout', Layout);
 Vue.component('Icon', Icon);
 window.tagList = tagListModel.fetch(); // 声明全局的 tagList
+window.createTag = (name) => {
+  const message = tagListModel.create(name);
+  if (message === 'duplicated') {
+    window.alert('标签名重复了');
+  } else if (message === 'success') {
+    window.alert('添加成功');
+  }
+};
 new Vue({
   router,
   store,
