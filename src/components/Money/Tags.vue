@@ -4,7 +4,7 @@
       <button @click="create">新增标签</button>
     </div>
     <ul class="current">
-      <li v-for="tag in dataSource" :key="tag.id"
+      <li v-for="tag in tagList" :key="tag.id"
           :class="{selected: selectedTags.indexOf(tag)>=0}"
           @click="toggle(tag)">{{ tag.name }}
       </li>
@@ -14,11 +14,12 @@
 </template>
 
 <script lang="ts">
-  import {Vue, Component, Prop} from 'vue-property-decorator';
+  import {Vue, Component} from 'vue-property-decorator';
+  import store from '@/store/index2';
 
   @Component
   export default class Tags extends Vue {
-    @Prop() readonly dataSource!: string[]; // 类型为字符串数组,且忽略空值; readonly 表示数据不能修改
+    tagList = store.fetchTags();
     selectedTags: string[] = [];
     // 如果标签没有被选中，点击后选中；如果标签已经选中，点击后取消选中
     toggle(tag: string) {
@@ -29,17 +30,14 @@
         this.selectedTags.push(tag);
       }
       // 选中或取消选中标签后，触发 update:value 事件，并将 selectedTags 的值传给 Money 组件 onUpdateTags 函数的第一个参数
-      this.$emit('update:value', this.selectedTags)
+      this.$emit('update:value', this.selectedTags);
     }
     create() {
       const name = window.prompt('请输入标签名'); // 点击"新增标签"，弹出输入对话框，并把输入的内容赋值给 name
-      if (name === '') {
-        window.alert('标签名不能为空');
-      } else {
-        this.$emit('update:dataSource', [...this.dataSource, name]);
-        // ...this.dataSource 表示展开 dataSource 数组
-        // 修改 Prop 的数据，需要在外部组件使用修饰符 .sync
+      if (!name) {
+        return window.alert('标签名不能为空');
       }
+      store.createTag(name);
     }
   }
 </script>
