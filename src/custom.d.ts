@@ -6,3 +6,19 @@ type RecordItem = {
   amount: string;
   createdAt?: Date; // ? 表示这个属性可以不存在
 }
+type Tag = {
+  id: string;
+  name: string;
+}
+type TagListModel = {
+  data: Tag[];
+  fetch: () => Tag[]; // 箭头前的括号表示函数输入值，有参数则加上参数；箭头后表示函数返回值的类型
+  create: (name: string) => 'success' | 'duplicated'; // 联合类型：表示返回的类型只有"success"和"duplicated"这两种
+  update: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
+  remove: (id: string) => boolean;
+  save: () => void; // void 表示没有返回值
+}
+// 给 Window 添加接口 tagList
+interface Window {
+  tagList: Tag[];
+}

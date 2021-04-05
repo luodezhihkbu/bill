@@ -1,18 +1,6 @@
 import createId from '@/lib/createId';
 
 const localStorageKeyName = 'tagList';
-type Tag = {
-  id: string;
-  name: string;
-}
-type TagListModel = {
-  data: Tag[];
-  fetch: () => Tag[]; // 箭头前的括号表示函数输入值，有参数则加上参数；箭头后表示函数返回值的类型
-  create: (name: string) => 'success' | 'duplicated'; // 联合类型：表示返回的类型只有"success"和"duplicated"这两种
-  update: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
-  remove: (id: string) => boolean;
-  save: () => void; // void 表示没有返回值
-}
 const tagListModel: TagListModel = {
   data: [],
   fetch() {
