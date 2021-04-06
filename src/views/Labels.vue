@@ -15,18 +15,25 @@
 <script lang="ts">
   import {Vue, Component} from 'vue-property-decorator';
   import Button from '@/components/Button.vue';
-  import store from '@/store/index2';
 
   @Component({
-    components: {Button}
+    components: {Button},
+    computed: {
+      tags() {
+        return this.$store.state.tagList;
+      }
+    }
   })
   export default class Labels extends Vue {
-    tags = store.tagList; // 标签数据从 tagListModel 获取
+    created() {
+      this.$store.commit('fetchTags');
+    }
     createTag() {
-      const name = window.prompt('请输入标签名');
-      if (name) {
-        store.createTag(name);
+      const name = window.prompt('请输入标签名'); // 点击"新增标签"，弹出输入对话框，并把输入的内容赋值给 name
+      if (!name) {
+        return window.alert('标签名不能为空');
       }
+      this.$store.commit('createTag', name);
     }
   }
 </script>
