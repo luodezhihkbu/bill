@@ -40,18 +40,14 @@
       }
     }
     update(name: string) {
-      // if (this.tag) {
-      //   store.updateTag(this.tag.id, name);
-      // }
+      if (this.tag) {
+        this.$store.commit('updateTag', {id: this.tag.id, name: name});
+      }
     }
     remove() {
-      // if (this.tag) {
-      //   if (store.removeTag(this.tag.id)) {
-      //     this.$router.back();
-      //   } else {
-      //     window.alert('删除失败');
-      //   }
-      // }
+      if (this.tag) {
+        this.$store.commit('removeTag', this.tag.id);
+      }
     }
     goBack() {
       this.$router.back();
