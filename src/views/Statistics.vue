@@ -1,8 +1,8 @@
 <template>
-  <layout>
+  <Layout>
     <Tabs class-prefix="type" :data-source="typeList" :value.sync="type"/>
     <Tabs class-prefix="interval" :data-source="intervalList" :value.sync="interval"/>
-  </layout>
+  </Layout>
 </template>
 
 <script lang="ts">
