@@ -6,7 +6,7 @@
       <span class="rightIcon"></span>
     </div>
     <div class="form-wrapper">
-      <FormItem :value="tag.name" field-name="标签名" placeholder="请输入标签名"
+      <FormItem :value="currentTag.name" field-name="标签名" placeholder="请输入标签名"
                 @update:value="update"/>
     </div>
     <div class="button-wrapper">
@@ -25,7 +25,7 @@
   })
   export default class EditLabel extends Vue {
     // 数据如果放在 computed 里，export 里就访问不到数据，所以需要改成 get 来获取数据
-    get tag() {
+    get currentTag() {
       return this.$store.state.currentTag;
     }
     // 获取路由 '/labels/edit/:id' 中的 id 的值
@@ -35,18 +35,18 @@
       const id = this.$route.params.id;
       this.$store.commit('fetchTags');
       this.$store.commit('setCurrentTag', id);
-      if (!this.tag) {
+      if (!this.currentTag) {
         this.$router.replace('/404');
       }
     }
     update(name: string) {
-      if (this.tag) {
-        this.$store.commit('updateTag', {id: this.tag.id, name: name});
+      if (this.currentTag) {
+        this.$store.commit('updateTag', {id: this.currentTag.id, name: name});
       }
     }
     remove() {
-      if (this.tag) {
-        this.$store.commit('removeTag', this.tag.id);
+      if (this.currentTag) {
+        this.$store.commit('removeTag', this.currentTag.id);
       }
     }
     goBack() {
