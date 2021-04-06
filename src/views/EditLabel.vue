@@ -28,10 +28,12 @@
     get tag() {
       return this.$store.state.currentTag;
     }
-    // 获取路由 '/labels/edit/:id' 中的 id 的值。
+    // 获取路由 '/labels/edit/:id' 中的 id 的值
+    // 接着执行 fetchTags 获取 tagList 数据
     // 如果 id 在 tagList 数据中已存在，则根据 id 路由到对应的标签；如果不存在，则路由到 404
     created() {
       const id = this.$route.params.id;
+      this.$store.commit('fetchTags');
       this.$store.commit('setCurrentTag', id);
       if (!this.tag) {
         this.$router.replace('/404');
