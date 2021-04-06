@@ -1,5 +1,5 @@
 <template>
-  <layout>
+  <Layout>
     <div class="tags">
       <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in tags" :key="tag.id">
         <span>{{ tag.name }}</span>
@@ -10,7 +10,7 @@
       <Button class="createTag" @click="createTag">新建标签</Button>
       <!-- createTag 从 mixins 里的 TagHelper 中调用 -->
     </div>
-  </layout>
+  </Layout>
 </template>
 
 <script lang="ts">

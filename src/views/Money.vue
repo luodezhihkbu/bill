@@ -1,12 +1,12 @@
 <template>
-  <layout class-prefix="layout">
+  <Layout class-prefix="layout">
     <NumberPad @update:value="onUpdateAmount" @submit="SaveRecord"/>
     <Types :value.sync="record.type"/>
     <div class="notes">
       <FormItem field-name="备注" placeholder="在这里输入备注" @update:value="onUpdateNotes"/>
     </div>
     <Tags/>
-  </layout>
+  </Layout>
 </template>
 
 <script lang="ts">
