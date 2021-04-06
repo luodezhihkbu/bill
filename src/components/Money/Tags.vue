@@ -19,14 +19,11 @@
   import {mixins} from 'vue-class-component';
   import TagHelper from '@/mixins/TagHelper';
 
-  @Component({
-    computed: {
-      tagList() {
-        return this.$store.state.tagList;
-      }
-    }
-  })
+  @Component
   export default class Tags extends mixins(TagHelper) {
+    get tagList() {
+      return this.$store.state.tagList;
+    }
     selectedTags: string[] = [];
     // 如果标签没有被选中，点击后选中；如果标签已经选中，点击后取消选中
     created() {
