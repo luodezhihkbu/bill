@@ -8,13 +8,16 @@
     </div>
     <div class="createTag-wrapper">
       <Button class="createTag" @click="createTag">新建标签</Button>
+      <!-- createTag 从 mixins 里的 TagHelper 中调用 -->
     </div>
   </layout>
 </template>
 
 <script lang="ts">
-  import {Vue, Component} from 'vue-property-decorator';
+  import {Component} from 'vue-property-decorator';
   import Button from '@/components/Button.vue';
+  import {mixins} from 'vue-class-component';
+  import TagHelper from '@/mixins/TagHelper';
 
   @Component({
     components: {Button},
@@ -24,16 +27,9 @@
       }
     }
   })
-  export default class Labels extends Vue {
+  export default class Labels extends mixins(TagHelper) {
     created() {
       this.$store.commit('fetchTags');
-    }
-    createTag() {
-      const name = window.prompt('请输入标签名'); // 点击"新增标签"，弹出输入对话框，并把输入的内容赋值给 name
-      if (!name) {
-        return window.alert('标签名不能为空');
-      }
-      this.$store.commit('createTag', name);
     }
   }
 </script>

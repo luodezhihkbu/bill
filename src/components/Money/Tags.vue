@@ -1,7 +1,8 @@
 <template>
   <div class="tags">
     <div class="new">
-      <button @click="create">新增标签</button>
+      <button @click="createTag">新增标签</button>
+      <!-- createTag 从 mixins 里的 TagHelper 中调用 -->
     </div>
     <ul class="current">
       <li v-for="tag in tagList" :key="tag.id"
@@ -14,7 +15,9 @@
 </template>
 
 <script lang="ts">
-  import {Vue, Component} from 'vue-property-decorator';
+  import {Component} from 'vue-property-decorator';
+  import {mixins} from 'vue-class-component';
+  import TagHelper from '@/mixins/TagHelper';
 
   @Component({
     computed: {
@@ -23,7 +26,7 @@
       }
     }
   })
-  export default class Tags extends Vue {
+  export default class Tags extends mixins(TagHelper) {
     selectedTags: string[] = [];
     // 如果标签没有被选中，点击后选中；如果标签已经选中，点击后取消选中
     created() {
@@ -38,13 +41,6 @@
       }
       // 选中或取消选中标签后，触发 update:value 事件，并将 selectedTags 的值传给 Money 组件 onUpdateTags 函数的第一个参数
       this.$emit('update:value', this.selectedTags);
-    }
-    create() {
-      const name = window.prompt('请输入标签名'); // 点击"新增标签"，弹出输入对话框，并把输入的内容赋值给 name
-      if (!name) {
-        return window.alert('标签名不能为空');
-      }
-      this.$store.commit('createTag', name);
     }
   }
 </script>
