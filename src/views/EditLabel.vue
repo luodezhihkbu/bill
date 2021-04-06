@@ -19,34 +19,37 @@
   import {Vue, Component} from 'vue-property-decorator';
   import FormItem from '@/components/Money/FormItem.vue';
   import Button from '@/components/Button.vue';
-  import store from '@/store/index2';
 
   @Component({
     components: {Button, FormItem}
   })
   export default class EditLabel extends Vue {
-    tag?: Tag = undefined;
+    // 数据如果放在 computed 里，export 里就访问不到数据，所以需要改成 get 来获取数据
+    get tag() {
+      return this.$store.state.currentTag;
+    }
+    // 获取路由 '/labels/edit/:id' 中的 id 的值。
+    // 如果 id 在 tagList 数据中已存在，则根据 id 路由到对应的标签；如果不存在，则路由到 404
     created() {
-      // 获取已存储的标签数据。如果路由的 id 在数据中已存在，则根据 id 路由到对应的标签；如果不存在，则路由到 404
-      this.tag = store.findTag(this.$route.params.id)
-      // this.$route.params.id 表示获取路由 '/labels/edit/:id' 中的 id 的值
+      const id = this.$route.params.id;
+      this.$store.commit('setCurrentTag', id);
       if (!this.tag) {
         this.$router.replace('/404');
       }
     }
     update(name: string) {
-      if (this.tag) {
-        store.updateTag(this.tag.id, name);
-      }
+      // if (this.tag) {
+      //   store.updateTag(this.tag.id, name);
+      // }
     }
     remove() {
-      if (this.tag) {
-        if (store.removeTag(this.tag.id)) {
-          this.$router.back();
-        } else {
-          window.alert('删除失败');
-        }
-      }
+      // if (this.tag) {
+      //   if (store.removeTag(this.tag.id)) {
+      //     this.$router.back();
+      //   } else {
+      //     window.alert('删除失败');
+      //   }
+      // }
     }
     goBack() {
       this.$router.back();
