@@ -1,8 +1,10 @@
 <template>
   <ul class="tabs">
     <li v-for="item in DataSource" :key="item.value"
-        :class="liClass(item)" @click="select(item)">{{ item.text }}
+        class="tabs-item" :class="liClass(item)"
+        @click="select(item)">{{ item.text }}
     </li>
+    <!-- class 和带冒号的 class 可以同时使用，但不能同时使用两个 class 或两个带冒号的 class -->
   </ul>
 </template>
 
@@ -37,7 +39,8 @@
     background: #c4c4c4;
     display: flex;
     font-size: 24px;
-    li {
+    // 这里的类名不能用 .tabs-item 或 li ，而是用 &-item，这样外部组件 Statistic 的样式才能覆盖到本组件
+    &-item {
       width: 50%;
       height: 64px;
       display: flex;
