@@ -2,6 +2,7 @@
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
     <Tabs class-prefix="interval" :data-source="intervalList" :value.sync="interval"/>
+    {{ result }}
   </Layout>
 </template>
 
@@ -19,6 +20,24 @@
     interval = 'day';
     recordTypeList = recordTypeList;
     intervalList = intervalList;
+    beforeCreate() {
+      this.$store.commit('fetchRecords');
+    }
+    get recordList() {
+      return (this.$store.state as RootState).recordList; // 这里要强制声明 RootState 类型
+    }
+    get result() {
+      const {recordList} = this;
+      type HashTableValue = { title: string; items: RecordItem[] }
+      const hashTable: { [key: string]: HashTableValue } = {};
+      for (let i = 0; i < recordList.length; i++) {
+        const [date, time] = recordList[i].createdAt!.split('T');
+        // [date, time] 表示数组的解构赋值：从数组中提取值，按照对应位置，对变量赋值。
+        hashTable[date] = hashTable[date] || {title: date, items: []};
+        hashTable[date].items.push(recordList[i]);
+      }
+      return hashTable;
+    }
   }
 </script>
 

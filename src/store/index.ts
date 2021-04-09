@@ -5,11 +5,6 @@ import createId from '@/lib/createId';
 import router from '@/router';
 
 Vue.use(Vuex);
-type RootState = {
-  recordList: RecordItem[];
-  tagList: Tag[];
-  currentTag?: Tag;
-}
 const store = new Vuex.Store({
   state: {
     recordList: [],
@@ -22,7 +17,7 @@ const store = new Vuex.Store({
     },
     createRecord(state, record: RecordItem) {
       const record2: RecordItem = clone(record); // 深拷贝
-      record2.createdAt = new Date();
+      record2.createdAt = new Date().toISOString(); // toISOString() 表示将 Date 的类型转化成 String 类型
       state.recordList.push(record2);
       store.commit('saveRecords');
     },
@@ -51,7 +46,7 @@ const store = new Vuex.Store({
     },
     updateTag(state, payload: { id: string; name: string }) { // mutations 里的方法只能接受两个参数
       const {id, name} = payload;
-      // 析构赋值，等价于：
+      // 对象的解构赋值，等价于：
       // const id = payload.id;
       // const name =payload.name;
       const idList = state.tagList.map(item => item.id);

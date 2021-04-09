@@ -12,7 +12,7 @@ const recordStore = {
   },
   createRecord(record: RecordItem) {
     const record2: RecordItem = clone(record); // 深拷贝
-    record2.createdAt = new Date();
+    record2.createdAt = new Date().toISOString();
     this.recordList && this.recordList.push(record2);
     recordStore.saveRecords();
   },
