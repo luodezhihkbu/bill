@@ -1,5 +1,6 @@
 * {
-  margin: 0; padding: 0;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 a {
@@ -16,4 +17,8 @@ button, input {
 // 把焦点元素（输入框）默认的内部线条隐藏
 :focus {
   outline: none;
+}
+// 把标题标签的字体加粗去掉
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
 }
