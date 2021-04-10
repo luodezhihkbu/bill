@@ -6,11 +6,11 @@
       <li v-for="(group, name) in result" :key="name">
         <!-- 列表渲染对象，第一个参数是对象的值（value），第二个参数是对象的键名（name），第三个参数是 index，
         用键名或 index 作为 key -->
-        <h3 class="title">{{ group.title }}</h3>
+        <h3 class="title">{{ beautify(group.title) }}</h3>
         <ol>
           <li v-for="item in group.items" :key="item.id" class="record">
             <!-- 列表渲染数组，默认用 id 作为 key；如果数组里的值是对象，可以用对象的键名作为 key -->
-            <span>{{tagString(item.tags)}}</span>
+            <span>{{ tagString(item.tags) }}</span>
             <span class="notes">{{ item.notes }}</span>
             <span>￥{{ item.amount }} </span>
           </li>
@@ -25,6 +25,7 @@
   import Tabs from '@/components/Tabs.vue';
   import recordTypeList from '@/constants/recordTypeList';
   import intervalList from '@/constants/intervalList';
+  import dayjs from 'dayjs';
 
   @Component({
     components: {Tabs}
@@ -55,6 +56,23 @@
     // 把 数组类型的 tags 转化成字符串类型
     tagString(tags: string[]) {
       return tags.length === 0 ? '无' : tags.join(',');
+    }
+    beautify(string: string) {
+      const day = dayjs(string); // 把数据库存储的时间解析成本地时间（中国时间）
+      const now = dayjs(); // 获取当前时间
+      if (day.isSame(now, 'day')) {
+        return '今天';
+        // 如果存储时间和当前时间的"天"相等，则返回"今天"
+      } else if (day.isSame(now.subtract(1, 'day'), 'day')) {
+        return '昨天';
+        // 把当前时间减"1天"，即昨天同一时刻的时间，如果存储时间和昨天时间的"天"相等，则返回"今天"
+      } else if (day.isSame(now.subtract(2, 'day'), 'day')) {
+        return '前天';
+      } else if (day.isSame(now, 'year')) {
+        return day.format('M月D日');
+      } else {
+        return day.format('YYYY年M月D日');
+      }
     }
   }
 </script>
