@@ -5,7 +5,7 @@
       <button @click="inputContent">1</button>
       <button @click="inputContent">2</button>
       <button @click="inputContent">3</button>
-      <button @click="move">删除</button>
+      <button @click="remove">删除</button>
       <button @click="inputContent">4</button>
       <button @click="inputContent">5</button>
       <button @click="inputContent">6</button>
@@ -45,7 +45,7 @@
       }
       this.output += input;
     }
-    move() {
+    remove() {
       if (this.output.length === 1) {
         this.output = '0';
       } else {
@@ -56,8 +56,9 @@
       this.output = '0';
     }
     ok() {
-      this.$emit('update:value', this.output);
-      this.$emit('submit', this.output);
+      const number = parseFloat(this.output); // 把 output 的类型转化成 Float 类型
+      this.$emit('update:value', number);
+      this.$emit('submit', number);
       this.output = '0';
     }
   }

@@ -26,7 +26,7 @@
     }
     recordTypeList = recordTypeList;
     record: RecordItem = {
-      tags: [], notes: '', type: '-', amount: '0'
+      tags: [], notes: '', type: '-', amount: 0
     };
     created() {
       this.$store.commit('fetchRecords');
@@ -34,7 +34,7 @@
     onUpdateNotes(value: string) {
       this.record.notes = value;
     }
-    onUpdateAmount(value: string) {
+    onUpdateAmount(value: number) {
       this.record.amount = value;
     }
     SaveRecord() {

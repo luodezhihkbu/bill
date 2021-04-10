@@ -1,9 +1,9 @@
 // 声明一个全局的类型，文件名需要以 .d.ts 结尾
 type RecordItem = {
-  tags: string[];
+  tags: Tag[];
   notes: string;
   type: string;
-  amount: string;
+  amount: number;
   createdAt?: string; // ? 表示这个属性可以不存在; JSON 不支持 Date 类型，改成 string 类型
 }
 type Tag = {
