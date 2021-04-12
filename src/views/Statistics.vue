@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
-    <ol>
+    <ol v-if="groupedList.length>0">
       <li v-for="group in groupedList" :key="group.title">
         <h3 class="title">
           <span>{{ beautify(group.title) }}</span>
@@ -19,6 +19,7 @@
         </ol>
       </li>
     </ol>
+    <div v-else class="noResult">目前没有相关记录</div>
   </Layout>
 </template>
 
@@ -43,15 +44,15 @@
     }
     get groupedList() {
       const {recordList} = this;
-      if (recordList.length === 0) {
-        return [];
-      }
       // 把原始数据按支出和收入分类，并分别对分类后的数据按创建时间排序
       const newList = clone(recordList) // sort 会改变原数组的值，需要先深拷贝
         .filter(r => r.type === this.type)
         .sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
       // 对数组进行排序，大的值排在前面
       // valueOf() 表示把字符串类型的 createdAt 转化成数字类型
+      if (newList.length === 0) {
+        return [];
+      }
       type Result = { title: string; total?: number; items: RecordItem[] }[]
       // 先把 newList 的第一项放进 result 的 items 里，并用创建时间作为 title 的值，从 newList 的第二项开始遍历，
       // 如果某项的对应的 title 的值和它上一项对应的 title 的值相等，则把这一项 push 到"上一项的 items 里"，
@@ -75,7 +76,7 @@
     }
     // 把 数组类型的 tags 转化成字符串类型
     tagString(tags: Tag[]) {
-      return tags.length === 0 ? '无' : tags.join(',');
+      return tags.length === 0 ? '无' : tags.map(t => t.name).join('，');
     }
     beautify(string: string) {
       const day = dayjs(string); // 把数据库存储的时间解析成本地时间（中国时间）
@@ -128,5 +129,9 @@
     margin-right: auto;
     margin-left: 16px;
     color: #999;
+  }
+  .noResult {
+    padding: 16px;
+    text-align: center;
   }
 </style>
