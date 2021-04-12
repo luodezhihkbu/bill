@@ -8,7 +8,6 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     recordList: [],
-    creatRecordError: null,
     tagList: [],
     currentTag: undefined
   } as RootState,
@@ -17,6 +16,9 @@ const store = new Vuex.Store({
       state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
     },
     createRecord(state, record: RecordItem) {
+      if (!record.tags || record.tags.length === 0) {
+        return window.alert('请选择至少一个标签');
+      }
       const record2: RecordItem = clone(record); // 深拷贝
       record2.createdAt = new Date().toISOString(); // toISOString() 表示将 Date 的类型转化成 String 类型
       state.recordList.push(record2);
@@ -24,6 +26,7 @@ const store = new Vuex.Store({
     },
     saveRecords(state) {
       window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
+      window.alert('已保存');
     },
     fetchTags(state) {
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
