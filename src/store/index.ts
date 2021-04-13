@@ -67,6 +67,15 @@ const store = new Vuex.Store({
           const tag = state.tagList.filter(item => item.id === id)[0];
           tag.name = name;
           store.commit('saveTags');
+          // 更新标签名后，在 recordList 里同步更新
+          for (let i = 0; i < state.recordList.length; i++) {
+            const idList = state.recordList[i].tags.map(item => item.id);
+            if (idList.indexOf(id) >= 0) {
+              const tag = state.recordList[i].tags.filter(item => item.id === id)[0];
+              tag.name = name;
+              window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
+            }
+          }
         }
       }
     },
