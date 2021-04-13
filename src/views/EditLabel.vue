@@ -65,12 +65,13 @@
     align-items: center;
     justify-content: space-between;
     .leftIcon {
-      width: 24px;
-      height: 24px;
+      width: 18px;
+      height: 18px;
+      color: #666;
     }
     .rightIcon {
-      width: 24px;
-      height: 24px;
+      width: 18px;
+      height: 18px;
     }
   }
   .form-wrapper {
