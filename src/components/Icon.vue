@@ -1,6 +1,7 @@
 <template>
   <!--  使用哪个 icon 就用对应的 name-->
   <svg class="icon" @click="$emit('click', $event)">
+    <!-- 点击小 svg，触发大 Svg 的点击事件 -->
     <use :xlink:href="'#'+name"/>
   </svg>
 </template>

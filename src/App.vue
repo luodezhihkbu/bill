@@ -8,6 +8,7 @@
   @import "~@/assets/style/helper.scss";
   @import "~@/assets/style/reset.scss";
   body {
+    // 下面两行是默认样式
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #333;

@@ -1,14 +1,14 @@
 <template>
   <Layout>
     <div class="tags">
-      <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in tags" :key="tag.id">
+      <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in tagList" :key="tag.id">
         <span>{{ tag.name }}</span>
         <Icon name="right"/>
       </router-link>
     </div>
     <div class="createTag-wrapper">
-      <Button class="createTag" @click="createTag">新建标签</Button>
-      <!-- createTag 从 mixins 里的 TagHelper 中调用 -->
+      <!-- createTag 方法从 mixins 里的 TagHelper 中调用 -->
+      <Button @click="createTag">新建标签</Button>
     </div>
   </Layout>
 </template>
@@ -22,8 +22,8 @@
   @Component({
     components: {Button}
   })
-  export default class Labels extends mixins(TagHelper) {
-    get tags() {
+  export default class Labels extends mixins(TagHelper) { // Vue 改成 mixins()
+    get tagList() {
       return this.$store.state.tagList;
     }
     created() {
@@ -50,17 +50,9 @@
       }
     }
   }
-  .createTag {
-    background: #767676;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    height: 40px;
-    padding: 0 16px;
-    &-wrapper {
-      text-align: center;
-      padding: 16px;
-      margin-top: 44-16px;
-    }
+  .createTag-wrapper {
+    text-align: center;
+    padding: 16px;
+    margin-top: 44-16px;
   }
 </style>

@@ -26,13 +26,14 @@
   @Component
   export default class NumberPad extends Vue {
     output = '0';
-    inputContent(event: MouseEvent) { // event 为鼠标事件
+    inputContent(event: MouseEvent) { // event 为鼠标事件，会自动获取鼠标点击的内容
       const button = (event.target as HTMLButtonElement); // 把 button 强制作为 Button 元素
-      const input = button.textContent!; // 获取点击的数字
+      const input = button.textContent!; // 获取点击的数字；！表示值不为 null
       if (this.output.length === 16) {
         return;
       }
-      if (this.output === '0') { // 输入的数字默认以0开头，输入其他数字后，0被替换掉
+      // 输入的数字默认以0开头，输入其他数字后，0被替换掉
+      if (this.output === '0') {
         if ('0123456789'.indexOf(input) >= 0) {
           this.output = input;
         } else {
@@ -40,6 +41,7 @@
         }
         return;
       }
+      // 已经输入一个"."后，不能再输入一个"."
       if (this.output.indexOf('.') >= 0 && input === '.') {
         return;
       }
@@ -68,7 +70,6 @@
   @import "~@/assets/style/helper.scss";
   .numberPad {
     .output {
-      @extend %clearFix;
       @extend %innerShadow;
       font-size: 36px;
       font-family: Consolas, monospace; // 系统默认的编程字体

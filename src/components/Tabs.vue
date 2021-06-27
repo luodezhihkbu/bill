@@ -1,10 +1,10 @@
 <template>
   <ul class="tabs">
+    <!-- class 和带冒号的 class 可以同时使用，但不能同时使用两个 class 或两个带冒号的 class -->
     <li v-for="item in DataSource" :key="item.value"
         class="tabs-item" :class="liClass(item)"
         @click="select(item)">{{ item.text }}
     </li>
-    <!-- class 和带冒号的 class 可以同时使用，但不能同时使用两个 class 或两个带冒号的 class -->
   </ul>
 </template>
 
@@ -16,13 +16,11 @@
   export default class Tabs extends Vue {
     @Prop({required: true, type: Array}) DataSource!: DataSourceItem[];
     @Prop(String) classPrefix?: string;
-    @Prop(String) readonly value!: string;
-    // 给 li 加上类名，选中的 li 会多一个 selected 类名
-    // 冒号后面的为 True ，则返回冒号前的类名
+    @Prop(String) readonly value!: string; // ! 表示忽略 value 没有初始值
+    // 给 li 加上类名，冒号后面的为 True ，则返回冒号前的类名
     liClass(item: DataSourceItem) {
       return {
-        // 在类名前加上 classPrefix 是为了区分 type 和 interval 这两类 li；
-        // 如果不加，在 Statistic.vue 里不能直接修改 li 的样式
+        // 在类名前加上 classPrefix 是为了区分 Statistics.vue 和 Money.vue 引用的 <Tabs/> 组件里的 li；
         // 类名里含变量要用 []
         [this.classPrefix + '-tabs-item']: this.classPrefix,
         selected: item.value === this.value
@@ -39,7 +37,9 @@
     background: #c4c4c4;
     display: flex;
     font-size: 24px;
-    // 这里的类名不能用 .tabs-item 或 li ，而是用 &-item，这样外部组件 Statistic 的样式才能覆盖到本组件
+    // 这里的类名不能用 .tabs-item 或 li ，而是用 &-item ；
+    // 因为给多个类名加样式比给单个类名加样式的优先级更高；
+    // 如果用 .tabs-item 或 li ，相当于给两个类名加样式，这样外部组件 Statistic 的样式就不能覆盖此组件的样式
     &-item {
       width: 50%;
       height: 64px;

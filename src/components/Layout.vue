@@ -1,4 +1,5 @@
 <template>
+  <!-- 给下面两个 div 绑定一个带前缀 classPrefix 的类名，是为了能在外部组件 Money.vue 里控制这两个 div 的样式 -->
   <div class="layout-wrapper" :class="classPrefix && `${classPrefix}-wrapper`">
     <div class="content" :class="classPrefix && `${classPrefix}-content`">
       <slot/>

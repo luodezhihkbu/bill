@@ -40,22 +40,24 @@
       this.$store.commit('fetchRecords');
     }
     get recordList() {
-      return (this.$store.state as RootState).recordList; // 这里要强制声明 RootState 类型
+      return (this.$store.state as RootState).recordList;
+      // 这里要强制声明 state 的类型或者 recordList 的类型，否则返回的 recordLis 的类型为 any
     }
+    // 对数据库存储的原始数据先排序再分组
     get groupedList() {
       const {recordList} = this;
       // 把原始数据按支出和收入分类，并分别对分类后的数据按创建时间排序
       const newList = clone(recordList) // sort 会改变原数组的值，需要先深拷贝
         .filter(r => r.type === this.type)
         .sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
-      // 对数组进行排序，大的值排在前面
-      // valueOf() 表示把字符串类型的 createdAt 转化成数字类型
+        // 对数组进行排序，大的值排在前面
+        // 用 dayjs 把数据库储存的时间解析成本地时间（中国时间），再用 valueOf() 把字符串类型的时间转化成数字类型
       if (newList.length === 0) {
         return [];
       }
       type Result = { title: string; total?: number; items: RecordItem[] }[]
-      // 先把 newList 的第一项放进 result 的 items 里，并用创建时间作为 title 的值，从 newList 的第二项开始遍历，
-      // 如果某项的对应的 title 的值和它上一项对应的 title 的值相等，则把这一项 push 到"上一项的 items 里"，
+      // 先把 newList 的第一项放进 result 的 items 里，并用创建时间作为 title 的值，从 newList 的第二项开始遍历；
+      // 如果某项对应的 title 的值和它上一项对应的 title 的值相等，则把这一项 push 到"上一项的 items 里"；
       // 如果不相等，则把这一项 push 到" result 里"，同时用创建时间作为 title 的值
       const result: Result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), items: [newList[0]]}];
       for (let i = 1; i < newList.length; i++) {
@@ -67,30 +69,29 @@
           result.push({title: dayjs(current.createdAt).format('YYYY-MM-DD'), items: [current]});
         }
       }
-      result.map(group => {
+      // 分完组后按天计算每天的总金额
+      result.forEach(group => {
         group.total = group.items.reduce((sum, item) => {
           return sum + item.amount;
         }, 0);
       });
       return result;
     }
-    // 把 数组类型的 tags 转化成字符串类型
+    // 把数组类型的 tags 转化成字符串类型，并用", "分隔
     tagString(tags: Tag[]) {
-      return tags.length === 0 ? '无' : tags.map(t => t.name).join('，');
+      return tags.map(t => t.name).join('，');
     }
     beautify(string: string) {
       const day = dayjs(string); // 把数据库存储的时间解析成本地时间（中国时间）
       const now = dayjs(); // 获取当前时间
       if (day.isSame(now, 'day')) {
-        return '今天';
-        // 如果存储时间和当前时间的"天"相等，则返回"今天"
+        return '今天'; // 如果存储时间和当前时间的"天"相等，则返回"今天"
       } else if (day.isSame(now.subtract(1, 'day'), 'day')) {
-        return '昨天';
-        // 把当前时间减"1天"，即昨天同一时刻的时间，如果存储时间和昨天时间的"天"相等，则返回"今天"
+        return '昨天'; // 把当前时间减"1天"，即昨天同一时刻的时间，如果存储时间和昨天时间的"天"相等，则返回"昨天"
       } else if (day.isSame(now.subtract(2, 'day'), 'day')) {
         return '前天';
       } else if (day.isSame(now, 'year')) {
-        return day.format('M月D日');
+        return day.format('M月D日'); // 如果存储时间和当前时间的"年"相等，则返回"M月D日"格式的日期
       } else {
         return day.format('YYYY年M月D日');
       }
@@ -100,8 +101,8 @@
 
 <style lang="scss" scoped>
   // style 里有 scoped 就只能修改当前组件的样式；
-  // 如果要修改导入组件 <Tabs/> 的样式，需要在元素前加上 ::v-deep （注意后面有空格）；
-  // 或者把 scoped 删掉，这样就会覆盖导入组件 <Tabs/> 的样式
+  // 如果要覆盖导入的组件 <Tabs/> 本身的样式，需要用 classPrefix 加上类名；
+  // 并且使用 ::v-deep （注意后面有空格）
   ::v-deep .type-tabs-item {
     background: #C4C4C4;
     &.selected {
