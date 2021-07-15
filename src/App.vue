@@ -20,5 +20,6 @@
   #app {
     max-width: 500px;
     margin: 0 auto;
+    @extend %outerShadow;
   }
 </style>
