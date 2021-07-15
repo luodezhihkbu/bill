@@ -2,6 +2,9 @@
 const path = require('path')
 
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/morney-1-dist/'
+    : '/',
   lintOnSave: false,
   chainWebpack: config =>{
     const dir = path.resolve(__dirname, 'src/assets/icons') // 注意路径要根据实际情况改写
