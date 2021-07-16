@@ -16,7 +16,10 @@
         </ol>
       </li>
     </ol>
-    <div v-else class="noResult">目前没有相关记录</div>
+    <div v-else class="noResult">
+      <Icon name="records"/>
+      <span class="remind">目前没有相关记录，快去记一笔吧~</span>
+    </div>
   </Layout>
 </template>
 
@@ -107,7 +110,17 @@
     color: #999;
   }
   .noResult {
-    padding: 16px;
+    padding: 64px;
+    display: flex;
     text-align: center;
+    align-items: center;
+    flex-direction: column;
+    .icon {
+      width: 64px;
+      height: 64px;
+    }
+    .remind {
+      padding: 32px;
+    }
   }
 </style>
