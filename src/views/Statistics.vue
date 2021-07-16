@@ -103,15 +103,15 @@
   // style 里有 scoped 就只能修改当前组件的样式；
   // 如果要覆盖导入的组件 <Tabs/> 本身的样式，需要用 classPrefix 加上类名；
   // 并且使用 ::v-deep （注意后面有空格）
-  ::v-deep .type-tabs-item {
-    background: #C4C4C4;
-    &.selected {
-      background: white;
-      &::after {
-        display: none;
-      }
-    }
-  }
+  //::v-deep .type-tabs-item {
+  //  background: #C4C4C4;
+  //  &.selected {
+  //    background: #f9d961;
+  //    &::after {
+  //      display: none;
+  //    }
+  //  }
+  //}
   %item {
     padding: 8px 16px;
     line-height: 24px;

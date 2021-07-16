@@ -34,7 +34,7 @@
 
 <style lang="scss" scoped>
   .tabs {
-    background: #c4c4c4;
+    background: #f9d961;
     display: flex;
     font-size: 24px;
     // 这里的类名不能用 .tabs-item 或 li ，而是用 &-item ；
@@ -52,8 +52,8 @@
         content: '';
         position: absolute;
         bottom: 0;
-        left: 0;
-        width: 100%;
+        justify-content: center;
+        width: 50%;
         height: 4px;
         background: #333333;
       }

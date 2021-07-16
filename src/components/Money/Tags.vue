@@ -54,8 +54,8 @@
       display: flex;
       flex-wrap: wrap;
       li {
-        $bg: #d9d9d9;
-        background: $bg;
+        border: 1px solid #e6e6e6;
+        background: #f5f5f5;
         height: 24px;
         line-height: 24px;
         border-radius: 12px;
@@ -64,8 +64,7 @@
         margin-right: 12px;
         margin-top: 4px;
         &.selected {
-          background: darken($bg, 50%);
-          color: white;
+          background: #f9d961;
         }
       }
     }

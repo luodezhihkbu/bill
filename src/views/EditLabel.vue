@@ -60,7 +60,7 @@
     text-align: center;
     font-size: 16px;
     padding: 12px 16px;
-    background: white;
+    background: #f9d961;
     display: flex;
     align-items: center;
     justify-content: space-between;
