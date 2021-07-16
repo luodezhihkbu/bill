@@ -30,7 +30,7 @@ const routes: Array<RouteConfig> = [
     component: NotFound
   },
   {
-    path: '/labels/edit/:id', // :id 用于切换需要编辑的标签
+    path: '/labels/edit/:id',
     component: EditLabel
   },
 ];

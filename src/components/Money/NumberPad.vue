@@ -26,13 +26,12 @@
   @Component
   export default class NumberPad extends Vue {
     output = '0';
-    inputContent(event: MouseEvent) { // event 为鼠标事件，会自动获取鼠标点击的内容
-      const button = (event.target as HTMLButtonElement); // 把 button 强制作为 Button 元素
-      const input = button.textContent!; // 获取点击的数字；！表示值不为 null
+    inputContent(event: MouseEvent) {
+      const button = (event.target as HTMLButtonElement);
+      const input = button.textContent!;
       if (this.output.length === 16) {
         return;
       }
-      // 输入的数字默认以0开头，输入其他数字后，0被替换掉
       if (this.output === '0') {
         if ('0123456789'.indexOf(input) >= 0) {
           this.output = input;
@@ -41,7 +40,6 @@
         }
         return;
       }
-      // 已经输入一个"."后，不能再输入一个"."
       if (this.output.indexOf('.') >= 0 && input === '.') {
         return;
       }
@@ -58,7 +56,7 @@
       this.output = '0';
     }
     ok() {
-      const number = parseFloat(this.output); // 把 output 的类型转化成 Float 类型
+      const number = parseFloat(this.output);
       this.$emit('update:value', number);
       this.$emit('submit', number);
       this.output = '0';

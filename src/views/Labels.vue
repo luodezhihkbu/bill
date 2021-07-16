@@ -7,7 +7,6 @@
       </router-link>
     </div>
     <div class="createTag-wrapper">
-      <!-- createTag 方法从 mixins 里的 TagHelper 中调用 -->
       <Button @click="createTag">新建标签</Button>
     </div>
   </Layout>
@@ -22,7 +21,7 @@
   @Component({
     components: {Button}
   })
-  export default class Labels extends mixins(TagHelper) { // Vue 改成 mixins()
+  export default class Labels extends mixins(TagHelper) {
     get tagList() {
       return this.$store.state.tagList;
     }

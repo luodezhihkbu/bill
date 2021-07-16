@@ -16,7 +16,6 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app');
-// 页面在手机浏览器中加载时自动滚到最底部，y为滚动的值
 window.onload = function () {
   window.alert('为了保证预览效果，请用手机打开链接预览~');
   setTimeout(function () {

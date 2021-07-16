@@ -19,8 +19,8 @@ const store = new Vuex.Store({
       if (!record.tags || record.tags.length === 0) {
         return window.alert('请选择至少一个标签');
       }
-      const record2: RecordItem = clone(record); // 深拷贝
-      record2.createdAt = new Date().toISOString(); // toISOString() 表示将 Date 的类型转化成 String 类型
+      const record2: RecordItem = clone(record);
+      record2.createdAt = new Date().toISOString();
       state.recordList.push(record2);
       store.commit('saveRecords');
     },
@@ -49,15 +49,11 @@ const store = new Vuex.Store({
     saveTags(state) {
       window.localStorage.setItem('tagList', JSON.stringify(state.tagList));
     },
-    // store.commit 没有返回值，需要通过 currentTag 来获取 store.commit('setCurrentTag') 的返回值
     setCurrentTag(state, id: string) {
       state.currentTag = state.tagList.filter(t => t.id === id)[0];
     },
-    updateTag(state, payload: { id: string; name: string }) { // mutations 里的方法只能接受两个参数
+    updateTag(state, payload: { id: string; name: string }) {
       const {id, name} = payload;
-      // 对象的解构赋值，等价于：
-      // const id = payload.id;
-      // const name =payload.name;
       const idList = state.tagList.map(item => item.id);
       if (idList.indexOf(id) >= 0) {
         const names = state.tagList.map(item => item.name);
@@ -67,7 +63,6 @@ const store = new Vuex.Store({
           const tag = state.tagList.filter(item => item.id === id)[0];
           tag.name = name;
           store.commit('saveTags');
-          // 更新标签名后，在 recordList 里同步更新
           for (let i = 0; i < state.recordList.length; i++) {
             const idList = state.recordList[i].tags.map(item => item.id);
             if (idList.indexOf(id) >= 0) {
@@ -90,7 +85,7 @@ const store = new Vuex.Store({
       if (index >= 0) {
         state.tagList.splice(index, 1);
         store.commit('saveTags');
-        router.back(); // 这里不能用 this.$router ，需要 import router
+        router.back();
       } else {
         window.alert('删除失败');
       }

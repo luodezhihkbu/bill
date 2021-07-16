@@ -1,7 +1,6 @@
 <template>
   <nav>
     <router-link to="/money" class="item" active-class="selected">
-      <!--active-class 表示选中这个标签后会加上一个类名-->
       <Icon name="money"/>
       记账
     </router-link>

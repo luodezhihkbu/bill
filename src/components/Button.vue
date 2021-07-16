@@ -1,8 +1,6 @@
 <template>
   <button class="button" @click="$emit('click', $event)">
-    <!-- 点击小 button，触发大 Button 的点击事件 -->
     <slot/>
-    <!-- slot 会被 Button 里的内容替换掉 -->
   </button>
 </template>
 

@@ -1,11 +1,9 @@
 <template>
   <div class="tags">
     <div class="new">
-      <!-- createTag 方法从 mixins 里的 TagHelper 中调用 -->
       <button @click="createTag">新增标签</button>
     </div>
     <ul class="current">
-      <!-- 当 selected 的值为 ture 时，即选中某个标签，则给这个 <li> 绑定类名 selected -->
       <li v-for="tag in tagList" :key="tag.id"
           :class="{selected: selectedTags.indexOf(tag)>=0}"
           @click="toggle(tag)">{{ tag.name }}
@@ -20,12 +18,11 @@
   import TagHelper from '@/mixins/TagHelper';
 
   @Component
-  export default class Tags extends mixins(TagHelper) { // Vue 改成 mixins()
+  export default class Tags extends mixins(TagHelper) {
     get tagList() {
       return this.$store.state.tagList;
     }
     selectedTags: string[] = [];
-    // 如果标签没有被选中，点击后选中；如果标签已经选中，点击后取消选中
     created() {
       this.$store.commit('fetchTags');
     }
@@ -36,7 +33,6 @@
       } else {
         this.selectedTags.push(tag);
       }
-      // 选中或取消选中标签后，触发 update:value 事件，并将 selectedTags 的值传给 Money 组件 onUpdateTags 函数的第一个参数
       this.$emit('update:value', this.selectedTags);
     }
   }
@@ -75,7 +71,7 @@
         border: none;
         color: #999;
         border-bottom: 1px solid;
-        padding: 0 4px; // 左右加 padding 让底部下划线变长
+        padding: 0 4px;
       }
     }
   }
