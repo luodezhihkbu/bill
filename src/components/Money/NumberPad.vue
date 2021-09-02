@@ -5,7 +5,7 @@
       <button @click="inputContent">1</button>
       <button @click="inputContent">2</button>
       <button @click="inputContent">3</button>
-      <button @click="remove" class="remove">删除</button>
+      <button @click="remove" class="remove"><Icon name="delete"/></button>
       <button @click="inputContent">4</button>
       <button @click="inputContent">5</button>
       <button @click="inputContent">6</button>
@@ -88,6 +88,13 @@
         border-right: 1px solid #e6e6e6;
         &.remove {
           border-right: none;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .icon {
+            width: 24px;
+            height: 24px;
+          }
         }
         &.clear {
           border-right: none;

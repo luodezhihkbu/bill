@@ -2,6 +2,7 @@
   <Layout class-prefix="layout">
     <NumberPad @update:value="onUpdateAmount" @submit="SaveRecord"/>
     <div class="notes">
+      <Icon name="notes"/>
       <FormItem field-name="备注" placeholder="在这里输入备注" :value.sync="record.notes"/>
     </div>
     <Tags @update:value="onUpdateTags"/>
@@ -50,5 +51,13 @@
     background: white;
     border-top: 1px solid #e6e6e6;
     padding: 12px 0;
+    display: flex;
+    align-items: center;
+    .icon {
+      width: 20px;
+      height: 20px;
+      margin-left: 15px;
+      margin-right: -18px;
+    }
   }
 </style>
