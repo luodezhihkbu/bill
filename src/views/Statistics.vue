@@ -2,12 +2,12 @@
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
     <ol v-if="groupedList.length>0">
-      <li v-for="group in groupedList" :key="group.title">
+      <li class="group" v-for="group in groupedList" :key="group.title">
         <h3 class="title">
           <span>{{ beautify(group.title) }}</span>
           <span>￥{{ group.total }}</span>
         </h3>
-        <ol>
+        <ol class="record-wrapper">
           <li v-for="item in group.items" :key="item.id" class="record">
             <span>{{ tagString(item.tags) }}</span>
             <span class="notes">{{ item.notes }}</span>
@@ -90,24 +90,40 @@
 </script>
 
 <style lang="scss" scoped>
-  %item {
-    padding: 8px 16px;
-    line-height: 24px;
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
-  }
-  .title {
-    @extend %item;
-  }
-  .record {
-    background: white;
-    @extend %item;
-  }
-  .notes {
-    margin-right: auto;
-    margin-left: 16px;
-    color: #999;
+  .group {
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background: white;
+    }
+    %item {
+      line-height: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-content: center;
+    }
+    .title {
+      padding: 8px 16px;
+      @extend %item;
+    }
+    .record-wrapper {
+      padding: 0 16px;
+      background: white;
+      .record {
+        padding: 8px 0;
+        border-bottom: 1px solid #e6e6e6;
+        @extend %item;
+        .notes {
+          margin-right: auto;
+          margin-left: 16px;
+          color: #999;
+        }
+      }
+    }
   }
   .noResult {
     padding: 64px;

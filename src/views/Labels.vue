@@ -36,6 +36,16 @@
     background: white;
     font-size: 16px;
     padding: 0 16px;
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: -16px;
+      width: 100%;
+      height: 1px;
+      background: white;
+    }
     .tag {
       min-height: 44px;
       display: flex;

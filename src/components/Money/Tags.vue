@@ -61,6 +61,7 @@
         margin-right: 12px;
         margin-top: 4px;
         &.selected {
+          border: 1px solid $color-theme;
           background: $color-theme;
         }
       }

@@ -45,7 +45,6 @@
         content: '';
         position: absolute;
         bottom: 0;
-        justify-content: center;
         width: 50%;
         height: 4px;
         background: #333333;

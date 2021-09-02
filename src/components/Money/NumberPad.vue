@@ -5,11 +5,11 @@
       <button @click="inputContent">1</button>
       <button @click="inputContent">2</button>
       <button @click="inputContent">3</button>
-      <button @click="remove">删除</button>
+      <button @click="remove" class="remove">删除</button>
       <button @click="inputContent">4</button>
       <button @click="inputContent">5</button>
       <button @click="inputContent">6</button>
-      <button @click="clear">清空</button>
+      <button @click="clear" class="clear">清空</button>
       <button @click="inputContent">7</button>
       <button @click="inputContent">8</button>
       <button @click="inputContent">9</button>
@@ -68,7 +68,7 @@
   @import "~@/assets/style/helper.scss";
   .numberPad {
     .output {
-      border: 1px solid #e6e6e6;
+      border-top: 1px solid #e6e6e6;
       font-size: 36px;
       font-family: Consolas, monospace; // 系统默认的编程字体
       padding: 9px 16px;
@@ -82,11 +82,21 @@
         height: 64px;
         float: left;
         background: transparent;
-        border: 1px solid #e6e6e6;
+        border-bottom: none;
+        border-left: none;
+        border-top: 1px solid #e6e6e6;
+        border-right: 1px solid #e6e6e6;
+        &.remove {
+          border-right: none;
+        }
+        &.clear {
+          border-right: none;
+        }
         &.ok {
           height: 64*2px;
           float: right;
           background: $color-theme;
+          border-right: none;
         }
         &.zero {
           width: 25*2%;
