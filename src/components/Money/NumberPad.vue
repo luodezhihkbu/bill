@@ -86,7 +86,7 @@
         &.ok {
           height: 64*2px;
           float: right;
-          background: #f9d961;
+          background: $color-theme;
         }
         &.zero {
           width: 25*2%;

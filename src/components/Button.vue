@@ -13,8 +13,9 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "~@/assets/style/helper.scss";
   .button {
-    background: #f9d961;
+    background: $color-theme;
     border-radius: 4px;
     border: none;
     height: 40px;

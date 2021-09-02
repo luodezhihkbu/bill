@@ -29,8 +29,9 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "~@/assets/style/helper.scss";
   .tabs {
-    background: #f9d961;
+    background: $color-theme;
     display: flex;
     font-size: 24px;
     &-item {

@@ -39,6 +39,7 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "~@/assets/style/helper.scss";
   .tags {
     background: white;
     font-size: 14px;
@@ -60,7 +61,7 @@
         margin-right: 12px;
         margin-top: 4px;
         &.selected {
-          background: #f9d961;
+          background: $color-theme;
         }
       }
     }

@@ -42,7 +42,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import "~@/assets/style/helper.scss";
   ::v-deep .layout-content {
     display: flex;
     flex-direction: column-reverse;

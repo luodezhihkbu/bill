@@ -52,11 +52,12 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "~@/assets/style/helper.scss";
   .navBar {
     text-align: center;
     font-size: 16px;
     padding: 12px 16px;
-    background: #f9d961;
+    background: $color-theme;
     display: flex;
     align-items: center;
     justify-content: space-between;
