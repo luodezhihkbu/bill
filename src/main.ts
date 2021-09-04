@@ -17,8 +17,7 @@ new Vue({
   render: h => h(App)
 }).$mount('#app');
 window.onload = function () {
-  window.alert('为了保证预览效果，请用手机打开链接预览~');
-  setTimeout(function () {
-    window.scrollTo(0, 1000);
-  }, 0);
+  if (window.innerWidth > 500) {
+    window.alert('为了保证预览效果，请用手机打开链接预览~');
+  }
 };

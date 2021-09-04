@@ -104,7 +104,6 @@
       line-height: 24px;
       display: flex;
       justify-content: space-between;
-      align-content: center;
     }
     .title {
       padding: 8px 16px;

@@ -69,17 +69,18 @@
   .numberPad {
     .output {
       border-top: 1px solid #e6e6e6;
-      font-size: 36px;
+      font-size: 30px;
       font-family: Consolas, monospace; // 系统默认的编程字体
-      padding: 9px 16px;
+      padding: 0 10px;
       text-align: right;
-      height: 72px;
+      height: 50px;
+      line-height: 49px;
     }
     .buttons {
       @extend %clearFix;
       button {
         width: 25%;
-        height: 64px;
+        height: 50px;
         float: left;
         background: transparent;
         border-bottom: none;
@@ -100,7 +101,7 @@
           border-right: none;
         }
         &.ok {
-          height: 64*2px;
+          height: 100px;
           float: right;
           background: $color-theme;
           border-right: none;

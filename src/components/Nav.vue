@@ -27,22 +27,19 @@
     @extend %outerShadow;
     display: flex;
     font-size: 12px;
-
     .item {
-      padding: 2px 0;
+      padding: 6px 0;
       width: 33.33333%;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-
       .icon {
-        width: 32px;
-        height: 32px;
+        width: 20px;
+        height: 20px;
       }
     }
   }
-
   .item.selected {
     color: $color-theme;
   }

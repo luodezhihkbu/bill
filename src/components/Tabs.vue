@@ -33,10 +33,10 @@
   .tabs {
     background: $color-theme;
     display: flex;
-    font-size: 24px;
+    font-size: 22px;
     &-item {
       width: 50%;
-      height: 64px;
+      height: 58px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -45,6 +45,7 @@
         content: '';
         position: absolute;
         bottom: 0;
+        left: 25%;
         width: 50%;
         height: 4px;
         background: #333333;

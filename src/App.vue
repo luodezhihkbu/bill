@@ -1,8 +1,22 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view :style="`height:${pageHeight}px`"/>
   </div>
 </template>
+
+<script lang="ts">
+  import {Component, Vue} from 'vue-property-decorator';
+
+  @Component
+  export default class App extends Vue {
+    static pageHeight: number;
+    pageHeight = window.innerHeight;
+  }
+  window.onresize = function () {
+    App.pageHeight = window.innerHeight;
+    window.location.reload();
+  };
+</script>
 
 <style lang="scss">
   @import "~@/assets/style/helper.scss";
