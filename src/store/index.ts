@@ -75,19 +75,18 @@ const store = new Vuex.Store({
       }
     },
     removeTag(state, id: string) {
-      let index = -1;
+      if (state.tagList.length === 1) {
+        window.alert('至少要保留一个标签哦~');
+        return;
+      }
       for (let i = 0; i < state.tagList.length; i++) {
         if (state.tagList[i].id === id) {
-          index = i;
+          state.tagList.splice(i, 1);
+          store.commit('saveTags');
+          window.alert('删除成功');
+          router.back();
           break;
         }
-      }
-      if (index >= 0) {
-        state.tagList.splice(index, 1);
-        store.commit('saveTags');
-        router.back();
-      } else {
-        window.alert('删除失败');
       }
     },
   },
