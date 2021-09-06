@@ -1,38 +1,40 @@
 <template>
-  <div class="tags">
-    <div class="new">
-      <button @click="createTag">新增标签</button>
-    </div>
-    <ul class="current">
-      <li v-for="tag in tagList" :key="tag.id"
-          :class="{selected: selectedTags.indexOf(tag)>=0}"
-          @click="toggle(tag)">{{ tag.name }}
-      </li>
-    </ul>
-  </div>
+  <ul class="iconList">
+    <li v-for="tag in filteredList" :key="tag.id">
+      <div class="icon-wrapper"
+           :class="{selected: tag.icon === selectedTags.icon}" @click="select(tag)">
+        <Icon :name="`${tag.icon}`"/>
+        <span>{{ tag.name }}</span>
+      </div>
+    </li>
+    <li>
+      <router-link :to="`/labels/add/${type}`" class="icon-wrapper">
+        <Icon name="add"/>
+        <span>添加类别</span>
+      </router-link>
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">
-  import {Component} from 'vue-property-decorator';
-  import {mixins} from 'vue-class-component';
-  import TagHelper from '@/mixins/TagHelper';
+  import {Vue, Component, Prop} from 'vue-property-decorator';
 
   @Component
-  export default class Tags extends mixins(TagHelper) {
-    get tagList() {
-      return this.$store.state.tagList;
-    }
-    selectedTags: string[] = [];
+  export default class Tags extends Vue {
+    @Prop({required: true}) type!: string;
+    selectedTags: Tag = {};
     created() {
       this.$store.commit('fetchTags');
     }
-    toggle(tag: string) {
-      const index = this.selectedTags.indexOf(tag);
-      if (index >= 0) {
-        this.selectedTags.splice(index, 1);
-      } else {
-        this.selectedTags.push(tag);
-      }
+    get tagList() {
+      return this.$store.state.tagList;
+    }
+    get filteredList() {
+      const {tagList} = this;
+      return tagList.filter(t => t.type === this.type);
+    }
+    select(tag) {
+      this.selectedTags = tag;
       this.$emit('update:value', this.selectedTags);
     }
   }
@@ -40,40 +42,38 @@
 
 <style lang="scss" scoped>
   @import "~@/assets/style/helper.scss";
-  .tags {
+  .iconList {
     background: white;
-    font-size: 14px;
-    padding: 16px;
+    max-height: 60vh;
+    overflow: auto;
+    padding: 0 10px 10px;
     display: flex;
-    flex-direction: column-reverse;
-    flex-grow: 1;
-    .current {
+    flex-wrap: wrap;
+    li {
+      width: 33.33333%;
       display: flex;
-      flex-wrap: wrap;
-      li {
-        border: 1px solid #e6e6e6;
-        background: #f5f5f5;
-        height: 24px;
-        line-height: 24px;
-        border-radius: 12px;
-        text-align: center;
-        padding: 0 16px;
-        margin-right: 12px;
-        margin-top: 4px;
+      justify-content: center;
+      align-items: center;
+      .icon-wrapper {
+        border: 1px solid lightgray;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        width: 80%;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        font-size: 13px;
         &.selected {
           border: 1px solid $color-theme;
           background: $color-theme;
         }
-      }
-    }
-    .new {
-      padding-top: 16px;
-      button {
-        background: transparent;
-        border: none;
-        color: #999;
-        border-bottom: 1px solid;
-        padding: 0 4px;
+        .icon {
+          width: 22px;
+          height: 22px;
+          margin-bottom: 2px;
+        }
       }
     }
   }

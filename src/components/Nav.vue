@@ -6,7 +6,7 @@
     </router-link>
     <router-link to="/labels" class="item" active-class="selected">
       <Icon name="labels"/>
-      标签
+      类别
     </router-link>
     <router-link to="/statistics" class="item" active-class="selected">
       <Icon name="statistics"/>

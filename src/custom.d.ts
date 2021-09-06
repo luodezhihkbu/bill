@@ -1,13 +1,14 @@
 type RecordItem = {
-  tags: Tag[];
+  tags: Tag;
   notes: string;
-  type: string;
   amount: number;
   createdAt?: string;
 }
 type Tag = {
   id: string;
   name: string;
+  type: string;
+  icon: string;
 }
 type RootState = {
   recordList: RecordItem[];

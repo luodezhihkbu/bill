@@ -16,8 +16,8 @@ const store = new Vuex.Store({
       state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
     },
     createRecord(state, record: RecordItem) {
-      if (!record.tags || record.tags.length === 0) {
-        return window.alert('请选择至少一个标签');
+      if (!record.tags) {
+        return window.alert('请选择一个类别');
       }
       const record2: RecordItem = clone(record);
       record2.createdAt = new Date().toISOString();
@@ -31,19 +31,20 @@ const store = new Vuex.Store({
     fetchTags(state) {
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
       if (!state.tagList || state.tagList.length === 0) {
-        store.commit('createTag', '衣');
-        store.commit('createTag', '食');
-        store.commit('createTag', '住');
-        store.commit('createTag', '行');
+        store.commit('createTag', {name: '衣服', type: 'expense', icon: 'clothes'});
+        store.commit('createTag', {name: '化妆品', type: 'expense', icon: 'commodity'});
+        store.commit('createTag', {name: '工资', type: 'income', icon: 'salary'});
+        store.commit('createTag', {name: '奖金', type: 'income', icon: 'bonus'});
       }
     },
-    createTag(state, name: string) {
+    createTag(state, payload: { name: string; type: string; icon: string }) {
+      const {name, type, icon} = payload;
       const names = state.tagList.map(item => item.name);
       if (names.indexOf(name) >= 0) {
-        window.alert('标签名重复了');
+        window.alert('名称重复了');
       }
       const id = createId().toString();
-      state.tagList.push({id, name: name});
+      state.tagList.push({id: id, name: name, type: type, icon: icon});
       store.commit('saveTags');
     },
     saveTags(state) {
@@ -64,10 +65,8 @@ const store = new Vuex.Store({
           tag.name = name;
           store.commit('saveTags');
           for (let i = 0; i < state.recordList.length; i++) {
-            const idList = state.recordList[i].tags.map(item => item.id);
-            if (idList.indexOf(id) >= 0) {
-              const tag = state.recordList[i].tags.filter(item => item.id === id)[0];
-              tag.name = name;
+            if (state.recordList[i].tags.id === id) {
+              state.recordList[i].tags.name = name;
               window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
             }
           }

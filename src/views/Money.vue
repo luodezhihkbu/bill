@@ -5,8 +5,10 @@
       <Icon name="notes"/>
       <FormItem field-name="备注" placeholder="在这里输入备注" :value.sync="record.notes"/>
     </div>
-    <Tags @update:value="onUpdateTags"/>
-    <Tabs :data-source="recordTypeList" :value.sync="record.type"/>
+    <div class="tags">
+      <Tags :type="record.tags.type" @update:value="onUpdateTags"/>
+    </div>
+    <Tabs :data-source="recordTypeList" :value.sync="record.tags.type"/>
   </Layout>
 </template>
 
@@ -24,7 +26,7 @@
   export default class Money extends Vue {
     recordTypeList = recordTypeList;
     record: RecordItem = {
-      tags: [], notes: '', type: '-', amount: 0
+      tags: {name: '', type: 'expense', icon:''}, notes: '', amount: 0
     };
     created() {
       this.$store.commit('fetchRecords');
@@ -46,6 +48,12 @@
   ::v-deep .layout-content {
     display: flex;
     flex-direction: column-reverse;
+  }
+  .tags {
+    flex-grow: 1;
+    padding: 20px 0;
+    background: white;
+    overflow: auto;
   }
   .notes {
     background: white;

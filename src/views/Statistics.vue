@@ -34,7 +34,7 @@
     components: {Tabs}
   })
   export default class Statistics extends Vue {
-    type = '-';
+    type = 'expense';
     recordTypeList = recordTypeList;
     beforeCreate() {
       this.$store.commit('fetchRecords');

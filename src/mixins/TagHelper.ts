@@ -3,13 +3,16 @@ import Component from 'vue-class-component';
 
 @Component
 export class TagHelper extends Vue {
-  createTag() {
-    const name = window.prompt('请输入标签名');
-    if (!name) {
-      return window.alert('标签名不能为空');
+  createTag(tag: { name: string; type: string; icon: string }) {
+    if (!tag.name) {
+      return window.alert('名称不能为空');
     }
-    this.$store.commit('createTag', name);
+    if (tag.name.length > 4) {
+      return window.alert('名称不能超过4个汉字');
+    }
+    this.$store.commit('createTag', tag);
     window.alert('添加成功');
+    this.$router.back();
   }
 }
 export default TagHelper;
