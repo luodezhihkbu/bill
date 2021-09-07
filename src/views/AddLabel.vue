@@ -47,6 +47,10 @@
 
 <style lang="scss" scoped>
   @import "~@/assets/style/helper.scss";
+  ::v-deep .content {
+    display: flex;
+    flex-direction: column;
+  }
   .form-wrapper {
     background: white;
     border-bottom: 1px solid #e6e6e6;
@@ -58,9 +62,10 @@
   }
   .iconList {
     background: white;
-    max-height: 60vh;
+    padding: 0 10px;
+    flex-grow: 1;
     overflow: auto;
-    padding: 0 10px 10px;
+    max-height: 40vh;
     display: flex;
     flex-wrap: wrap;
     li {
@@ -90,7 +95,6 @@
   }
   .button-wrapper {
     text-align: center;
-    padding: 16px;
-    margin-top: 44-16px;
+    padding: 50px;
   }
 </style>

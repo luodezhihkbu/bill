@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
-    <ol v-if="groupedList.length>0">
+    <ol class="group-wrapper" v-if="groupedList.length>0">
       <li class="group" v-for="group in groupedList" :key="group.title">
         <h3 class="title">
           <span>{{ beautify(group.title) }}</span>
@@ -9,7 +9,7 @@
         </h3>
         <ol class="record-wrapper">
           <li v-for="item in group.items" :key="item.createdAt" class="record">
-            <span>{{ tagString(item.tags) }}</span>
+            <span>{{ item.tags.name }}</span>
             <span class="notes">{{ item.notes }}</span>
             <span>￥{{ item.amount }} </span>
           </li>
@@ -45,7 +45,7 @@
     get groupedList() {
       const {recordList} = this;
       const newList = clone(recordList)
-        .filter(r => r.type === this.type)
+        .filter(r => r.tags.type === this.type)
         .sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
       if (newList.length === 0) {
         return [];
@@ -68,9 +68,6 @@
       });
       return result;
     }
-    tagString(tags: Tag[]) {
-      return tags.map(t => t.name).join('，');
-    }
     beautify(string: string) {
       const day = dayjs(string);
       const now = dayjs();
@@ -90,36 +87,44 @@
 </script>
 
 <style lang="scss" scoped>
-  .group {
-    position: relative;
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 1px;
-      background: white;
-    }
-    %item {
-      line-height: 24px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .title {
-      padding: 8px 16px;
-      @extend %item;
-    }
-    .record-wrapper {
-      padding: 0 16px;
-      background: white;
-      .record {
-        padding: 8px 0;
-        border-bottom: 1px solid #e6e6e6;
+  ::v-deep .content {
+    display: flex;
+    flex-direction: column;
+  }
+  .group-wrapper {
+    flex-grow: 1;
+    overflow: auto;
+    .group {
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        background: white;
+      }
+      %item {
+        line-height: 24px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .title {
+        padding: 8px 16px;
         @extend %item;
-        .notes {
-          margin-right: auto;
-          margin-left: 16px;
-          color: #999;
+      }
+      .record-wrapper {
+        padding: 0 16px;
+        background: white;
+        .record {
+          padding: 8px 0;
+          border-bottom: 1px solid #e6e6e6;
+          @extend %item;
+          .notes {
+            margin-right: auto;
+            margin-left: 16px;
+            color: #999;
+          }
         }
       }
     }

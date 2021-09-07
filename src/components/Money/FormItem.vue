@@ -18,6 +18,10 @@
     @Prop({required: true}) fieldName!: string;
     @Prop() placeholder?: string;
     onValueChanged(value: string) {
+      if(value === '') {
+        window.alert('名称不能为空')
+        return
+      }
       this.$emit('update:value', value);
     }
   }

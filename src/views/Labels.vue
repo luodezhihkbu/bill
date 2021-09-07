@@ -1,29 +1,36 @@
 <template>
   <Layout>
+    <Tabs :data-source="recordTypeList" :value.sync="type"></Tabs>
     <div class="tags">
-      <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in tagList" :key="tag.id">
+      <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in filteredList" :key="tag.id">
         <span>{{ tag.name }}</span>
         <Icon name="right"/>
       </router-link>
     </div>
-    <div class="createTag-wrapper">
-      <Button @click="createTag">新建标签</Button>
-    </div>
+    <router-link :to="`/labels/add/${type}`" class="createTag-wrapper">
+      <Button>添加类别</Button>
+    </router-link>
   </Layout>
 </template>
 
 <script lang="ts">
-  import {Component} from 'vue-property-decorator';
+  import {Vue, Component} from 'vue-property-decorator';
   import Button from '@/components/Button.vue';
-  import {mixins} from 'vue-class-component';
-  import TagHelper from '@/mixins/TagHelper';
+  import Tabs from '@/components/Tabs.vue';
+  import recordTypeList from '@/constants/recordTypeList';
 
   @Component({
-    components: {Button}
+    components: {Button, Tabs}
   })
-  export default class Labels extends mixins(TagHelper) {
+  export default class Labels extends Vue {
+    recordTypeList = recordTypeList;
+    type = 'expense';
     get tagList() {
-      return this.$store.state.tagList;
+      return (this.$store.state as RootState).tagList;
+    }
+    get filteredList() {
+      const {tagList} = this;
+      return tagList.filter(t => t.type === this.type);
     }
     created() {
       this.$store.commit('fetchTags');
@@ -32,10 +39,14 @@
 </script>
 
 <style lang="scss" scoped>
+  ::v-deep .content {
+    display: flex;
+    flex-direction: column;
+  }
   .tags {
-    background: white;
+    flex-grow: 1;
+    overflow: auto;
     font-size: 16px;
-    padding: 0 16px;
     position: relative;
     &::after {
       content: '';
@@ -47,6 +58,8 @@
       background: white;
     }
     .tag {
+      background: white;
+      padding: 0 16px;
       min-height: 44px;
       display: flex;
       align-items: center;
@@ -61,7 +74,6 @@
   }
   .createTag-wrapper {
     text-align: center;
-    padding: 16px;
-    margin-top: 44-16px;
+    padding: 50px;
   }
 </style>

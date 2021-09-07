@@ -1,12 +1,12 @@
 <template>
   <Layout>
-    <Header>编辑标签</Header>
+    <Header>编辑类别</Header>
     <div class="form-wrapper">
-      <FormItem :value="currentTag.name" field-name="标签名" placeholder="请输入标签名"
+      <FormItem :value="currentTag.name" field-name="名称" placeholder="请输入类别名"
                 @update:value="update"/>
     </div>
     <div class="button-wrapper">
-      <Button @click="remove">删除标签</Button>
+      <Button @click="remove">删除类别</Button>
     </div>
   </Layout>
 </template>
