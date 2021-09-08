@@ -11,8 +11,7 @@ export class TagHelper extends Vue {
       return window.alert('名称不能超过4个汉字');
     }
     this.$store.commit('createTag', tag);
-    window.alert('添加成功');
-    this.$router.back();
+
   }
 }
 export default TagHelper;

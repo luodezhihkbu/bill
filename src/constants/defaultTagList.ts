@@ -1,0 +1,15 @@
+export default Object([
+  {id: '0', name: '餐饮', type: 'expense', icon: 'food'},
+  {id: '1', name: '购物', type: 'expense', icon: 'shopping'},
+  {id: '2', name: '交通', type: 'expense', icon: 'traffic'},
+  {id: '3', name: '服饰', type: 'expense', icon: 'clothes'},
+  {id: '4', name: '娱乐', type: 'expense', icon: 'entertainment'},
+  {id: '5', name: '工资', type: 'income', icon: 'salary'},
+  {id: '6', name: '兼职', type: 'income', icon: 'part-time'},
+  {id: '7', name: '理财', type: 'income', icon: 'finance'},
+  {id: '8', name: '奖金', type: 'income', icon: 'bonus'},
+  {id: '9', name: '股票', type: 'income', icon: 'stork'},
+  {id: '10', name: '通讯', type: 'expense', icon: 'communication'},
+  {id: '11', name: '零食', type: 'expense', icon: 'snacks'},
+  {id: '12', name: '教育', type: 'expense', icon: 'education'},
+])

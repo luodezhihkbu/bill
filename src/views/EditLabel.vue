@@ -34,7 +34,11 @@
     }
     update(name: string) {
       if (this.currentTag) {
-        this.$store.commit('updateTag', {id: this.currentTag.id, name: name});
+        if (this.currentTag.name.length > 4) {
+          return window.alert('名称不能超过4个汉字');
+        } else {
+          this.$store.commit('updateTag', {id: this.currentTag.id, name: name});
+        }
       }
     }
     remove() {

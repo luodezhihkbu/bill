@@ -5,9 +5,9 @@
       <Icon name="notes"/>
       <FormItem field-name="备注" placeholder="在这里输入备注" :value.sync="record.notes"/>
     </div>
-    <Tags :type="record.tags.type" @update:value="onUpdateTags"/>
+    <Tags :tabsType="tabsType" @update:value="onUpdateTags"/>
     <div class="bar"></div>
-    <Tabs :data-source="recordTypeList" :value.sync="record.tags.type"/>
+    <Tabs :data-source="recordTypeList" :value.sync="tabsType"/>
   </Layout>
 </template>
 
@@ -24,8 +24,9 @@
   })
   export default class Money extends Vue {
     recordTypeList = recordTypeList;
+    tabsType = 'expense';
     record: RecordItem = {
-      tags: {id: '', name: '', type: 'expense', icon: ''}, notes: '', amount: 0
+      tags: {id: '', name: '', type: '', icon: ''}, notes: '', amount: 0
     };
     onUpdateTags(value: Tag) {
       this.record.tags = value;

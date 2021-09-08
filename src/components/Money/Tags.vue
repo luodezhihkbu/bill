@@ -9,7 +9,7 @@
         </div>
       </li>
       <li>
-        <router-link :to="`/labels/add/${type}`" class="icon-wrapper">
+        <router-link :to="`/labels/add/${tabsType}`" class="icon-wrapper">
           <Icon name="add"/>
           <span>添加类别</span>
         </router-link>
@@ -23,7 +23,7 @@
 
   @Component
   export default class Tags extends Vue {
-    @Prop({required: true}) type!: string;
+    @Prop({required: true}) tabsType!: string;
     selectedTag: Tag = {id: '', name: '', type: '', icon: ''};
     created() {
       this.$store.commit('fetchTags');
@@ -33,7 +33,7 @@
     }
     get filteredList() {
       const {tagList} = this;
-      return tagList.filter(t => t.type === this.type);
+      return tagList.filter(t => t.type === this.tabsType);
     }
     select(tag: Tag) {
       this.selectedTag = tag;

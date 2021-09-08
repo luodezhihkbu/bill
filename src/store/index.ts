@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import clone from '@/lib/clone';
 import createId from '@/lib/createId';
 import router from '@/router';
+import defaultTagList from '@/constants/defaultTagList';
 
 Vue.use(Vuex);
 const store = new Vuex.Store({
@@ -16,7 +17,7 @@ const store = new Vuex.Store({
       state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
     },
     createRecord(state, record: RecordItem) {
-      if (!record.tags) {
+      if (!record.tags.id) {
         return window.alert('请选择一个类别');
       }
       const record2: RecordItem = clone(record);
@@ -31,10 +32,8 @@ const store = new Vuex.Store({
     fetchTags(state) {
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
       if (!state.tagList || state.tagList.length === 0) {
-        store.commit('createTag', {name: '衣服', type: 'expense', icon: 'clothes'});
-        store.commit('createTag', {name: '化妆品', type: 'expense', icon: 'commodity'});
-        store.commit('createTag', {name: '工资', type: 'income', icon: 'salary'});
-        store.commit('createTag', {name: '奖金', type: 'income', icon: 'bonus'});
+        state.tagList = defaultTagList;
+        store.commit('saveTags');
       }
     },
     createTag(state, payload: { name: string; type: string; icon: string }) {
@@ -42,10 +41,13 @@ const store = new Vuex.Store({
       const names = state.tagList.map(item => item.name);
       if (names.indexOf(name) >= 0) {
         window.alert('名称重复了');
+      } else {
+        const id = createId().toString();
+        state.tagList.push({id: id, name: name, type: type, icon: icon});
+        store.commit('saveTags');
+        window.alert('添加成功');
+        router.back();
       }
-      const id = createId().toString();
-      state.tagList.push({id: id, name: name, type: type, icon: icon});
-      store.commit('saveTags');
     },
     saveTags(state) {
       window.localStorage.setItem('tagList', JSON.stringify(state.tagList));
@@ -74,7 +76,10 @@ const store = new Vuex.Store({
       }
     },
     removeTag(state, id: string) {
-      if (state.tagList.length === 1) {
+      const {tagList} = state;
+      const tagList1 = tagList.filter(t => t.type === 'expense');
+      const tagList2 = tagList.filter(t => t.type === 'income');
+      if (tagList1.length === 1 || tagList2.length === 1) {
         window.alert('至少要保留一个标签哦~');
         return;
       }

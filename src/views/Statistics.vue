@@ -9,7 +9,8 @@
         </h3>
         <ol class="record-wrapper">
           <li v-for="item in group.items" :key="item.createdAt" class="record">
-            <span>{{ item.tags.name }}</span>
+            <Icon :name="`${item.tags.icon}`"/>
+            <span class="name">{{ item.tags.name }}</span>
             <span class="notes">{{ item.notes }}</span>
             <span>￥{{ item.amount }} </span>
           </li>
@@ -107,10 +108,10 @@
       %item {
         line-height: 24px;
         display: flex;
-        justify-content: space-between;
       }
       .title {
         padding: 8px 16px;
+        justify-content: space-between;
         @extend %item;
       }
       .record-wrapper {
@@ -119,7 +120,11 @@
         .record {
           padding: 8px 0;
           border-bottom: 1px solid #e6e6e6;
+          align-items: center;
           @extend %item;
+          .name {
+            margin-left: 6px;
+          }
           .notes {
             margin-right: auto;
             margin-left: 16px;

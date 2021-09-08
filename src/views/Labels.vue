@@ -3,7 +3,8 @@
     <Tabs :data-source="recordTypeList" :value.sync="type"></Tabs>
     <div class="tags">
       <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in filteredList" :key="tag.id">
-        <span>{{ tag.name }}</span>
+        <Icon :name="`${tag.icon}`"/>
+        <span class="name">{{ tag.name }}</span>
         <Icon name="right"/>
       </router-link>
     </div>
@@ -44,10 +45,12 @@
     flex-direction: column;
   }
   .tags {
-    flex-grow: 1;
     overflow: auto;
     font-size: 16px;
     position: relative;
+    padding: 0 16px;
+    margin-bottom: auto;
+    background: white;
     &::after {
       content: '';
       position: absolute;
@@ -58,13 +61,14 @@
       background: white;
     }
     .tag {
-      background: white;
-      padding: 0 16px;
       min-height: 44px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
       border-bottom: 1px solid #e6e6e6;
+      .name {
+        flex-grow: 1;
+        padding-left: 6px;
+      }
       .icon {
         width: 18px;
         height: 18px;
@@ -74,6 +78,6 @@
   }
   .createTag-wrapper {
     text-align: center;
-    padding: 50px;
+    margin: 50px auto;
   }
 </style>
