@@ -53,10 +53,11 @@ const store = new Vuex.Store({
       window.localStorage.setItem('tagList', JSON.stringify(state.tagList));
     },
     setCurrentTag(state, id: string) {
-      state.currentTag = state.tagList.filter(t => t.id === id)[0];
+      const tag = state.tagList.filter(t => t.id === id)[0];
+      state.currentTag = clone(tag);
     },
-    updateTag(state, payload: { id: string; name: string }) {
-      const {id, name} = payload;
+    updateTag(state, tag: Tag) {
+      const {id, name} = tag;
       const idList = state.tagList.map(item => item.id);
       if (idList.indexOf(id) >= 0) {
         const names = state.tagList.map(item => item.name);
@@ -72,6 +73,7 @@ const store = new Vuex.Store({
               window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
             }
           }
+          window.alert('编辑成功');
         }
       }
     },

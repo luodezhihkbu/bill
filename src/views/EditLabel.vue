@@ -2,11 +2,11 @@
   <Layout>
     <Header>编辑类别</Header>
     <div class="form-wrapper">
-      <FormItem :value="currentTag.name" field-name="名称" placeholder="请输入类别名"
-                @update:value="update"/>
+      <FormItem :value.sync="currentTag.name" field-name="名称" placeholder="请输入类别名"/>
+      <Icon name="delete2" @click="remove"></Icon>
     </div>
     <div class="button-wrapper">
-      <Button @click="remove">删除类别</Button>
+      <Button @click="update(currentTag)">确定</Button>
     </div>
   </Layout>
 </template>
@@ -22,7 +22,7 @@
   })
   export default class EditLabel extends Vue {
     get currentTag() {
-      return this.$store.state.currentTag;
+      return (this.$store.state as RootState).currentTag;
     }
     created() {
       const id = this.$route.params.id;
@@ -32,15 +32,14 @@
         this.$router.replace('/404');
       }
     }
-    update(name: string) {
-      if (this.currentTag) {
-        if (this.currentTag.name.length > 4) {
+    update(currentTag: Tag) {
+        if (currentTag.name.length > 4) {
           return window.alert('名称不能超过4个汉字');
         } else {
-          this.$store.commit('updateTag', {id: this.currentTag.id, name: name});
+          console.log(currentTag);
+          this.$store.commit('updateTag', currentTag);
         }
       }
-    }
     remove() {
       if (this.currentTag) {
         this.$store.commit('removeTag', this.currentTag.id);
@@ -53,6 +52,13 @@
   .form-wrapper {
     background: white;
     margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .icon {
+      margin-right: 16px;
+      color: #eb4d3d;
+    }
   }
   .button-wrapper {
     text-align: center;
