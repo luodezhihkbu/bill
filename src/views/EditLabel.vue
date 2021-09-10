@@ -33,13 +33,15 @@
       }
     }
     update(currentTag: Tag) {
-        if (currentTag.name.length > 4) {
-          return window.alert('名称不能超过4个汉字');
-        } else {
-          console.log(currentTag);
-          this.$store.commit('updateTag', currentTag);
-        }
+      if (currentTag.name === '') {
+        return window.alert('名称不能为空');
       }
+      if (currentTag.name.length > 4) {
+        return window.alert('名称不能超过4个汉字');
+      } else {
+        this.$store.commit('updateTag', currentTag);
+      }
+    }
     remove() {
       if (this.currentTag) {
         this.$store.commit('removeTag', this.currentTag.id);

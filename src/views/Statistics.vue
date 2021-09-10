@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
+    <Tabs class-prefix="type" :data-source="recordTypeList"/>
     <ol class="group-wrapper" v-if="groupedList.length>0">
       <li class="group" v-for="group in groupedList" :key="group.title">
         <h3 class="title">
@@ -35,10 +35,12 @@
     components: {Tabs}
   })
   export default class Statistics extends Vue {
-    type = 'expense';
     recordTypeList = recordTypeList;
     beforeCreate() {
       this.$store.commit('fetchRecords');
+    }
+    get tabsType() {
+      return this.$store.state.tabsType;
     }
     get recordList() {
       return (this.$store.state as RootState).recordList;
@@ -46,7 +48,7 @@
     get groupedList() {
       const {recordList} = this;
       const newList = clone(recordList)
-        .filter(r => r.tags.type === this.type)
+        .filter(r => r.tags.type === this.tabsType)
         .sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
       if (newList.length === 0) {
         return [];

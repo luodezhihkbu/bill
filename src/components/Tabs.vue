@@ -15,15 +15,17 @@
   export default class Tabs extends Vue {
     @Prop({required: true, type: Array}) DataSource!: DataSourceItem[];
     @Prop(String) classPrefix?: string;
-    @Prop(String) readonly value!: string;
+    get tabsType() {
+      return this.$store.state.tabsType;
+    }
     liClass(item: DataSourceItem) {
       return {
         [this.classPrefix + '-tabs-item']: this.classPrefix,
-        selected: item.value === this.value
+        selected: item.value === this.tabsType
       };
     }
     select(item: DataSourceItem) {
-      this.$emit('update:value', item.value);
+      this.$store.commit('setTabsType', item.value);
     }
   }
 </script>

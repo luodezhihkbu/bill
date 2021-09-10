@@ -7,7 +7,7 @@
     </div>
     <Tags :tabsType="tabsType" @update:value="onUpdateTags"/>
     <div class="bar"></div>
-    <Tabs :data-source="recordTypeList" :value.sync="tabsType"/>
+    <Tabs :data-source="recordTypeList"/>
   </Layout>
 </template>
 
@@ -24,10 +24,15 @@
   })
   export default class Money extends Vue {
     recordTypeList = recordTypeList;
-    tabsType = 'expense';
     record: RecordItem = {
       tags: {id: '', name: '', type: '', icon: ''}, notes: '', amount: 0
     };
+    get tabsType() {
+      return this.$store.state.tabsType;
+    }
+    created() {
+      this.record.tags.type = this.tabsType;
+    }
     onUpdateTags(value: Tag) {
       this.record.tags = value;
     }

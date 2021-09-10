@@ -10,7 +10,8 @@ const store = new Vuex.Store({
   state: {
     recordList: [],
     tagList: [],
-    currentTag: undefined
+    currentTag: undefined,
+    tabsType: 'expense'
   } as RootState,
   mutations: {
     fetchRecords(state) {
@@ -95,6 +96,9 @@ const store = new Vuex.Store({
         }
       }
     },
+    setTabsType(state, tabsType: string) {
+      state.tabsType = tabsType;
+    }
   },
 });
 export default store;

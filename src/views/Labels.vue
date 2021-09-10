@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <Tabs :data-source="recordTypeList" :value.sync="type"></Tabs>
+    <Tabs :data-source="recordTypeList"></Tabs>
     <div class="tags">
       <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in filteredList" :key="tag.id">
         <Icon :name="`${tag.icon}`"/>
@@ -8,7 +8,7 @@
         <Icon name="right"/>
       </router-link>
     </div>
-    <router-link :to="`/labels/add/${type}`" class="createTag-wrapper">
+    <router-link :to="`/labels/add/${tabsType}`" class="createTag-wrapper">
       <Button>添加类别</Button>
     </router-link>
   </Layout>
@@ -25,13 +25,15 @@
   })
   export default class Labels extends Vue {
     recordTypeList = recordTypeList;
-    type = 'expense';
     get tagList() {
       return (this.$store.state as RootState).tagList;
     }
     get filteredList() {
       const {tagList} = this;
-      return tagList.filter(t => t.type === this.type);
+      return tagList.filter(t => t.type === this.tabsType);
+    }
+    get tabsType() {
+      return this.$store.state.tabsType;
     }
     created() {
       this.$store.commit('fetchTags');
