@@ -8,7 +8,8 @@
           <span>￥{{ group.total }}</span>
         </h3>
         <ol class="record-wrapper">
-          <li v-for="item in group.items" :key="item.createdAt" class="record">
+          <li v-for="item in group.items" :key="item.createdAt"
+              class="record" :class="{lastRecord: item === group.items[group.items.length-1]}">
             <Icon :name="`${item.tags.icon}`"/>
             <span class="name">{{ item.tags.name }}</span>
             <span class="notes">{{ item.notes }}</span>
@@ -97,42 +98,34 @@
   .group-wrapper {
     flex-grow: 1;
     overflow: auto;
-    .group {
-      position: relative;
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 1px;
-        background: white;
-      }
-      %item {
-        line-height: 24px;
-        display: flex;
-      }
-      .title {
-        padding: 8px 16px;
-        justify-content: space-between;
+    %item {
+      line-height: 24px;
+      display: flex;
+    }
+    .title {
+      padding: 8px 16px;
+      justify-content: space-between;
+      @extend %item;
+    }
+    .record-wrapper {
+      padding: 0 16px;
+      background: white;
+      .record {
+        padding: 8px 0;
+        border-bottom: 1px solid #e6e6e6;
+        align-items: center;
         @extend %item;
-      }
-      .record-wrapper {
-        padding: 0 16px;
-        background: white;
-        .record {
-          padding: 8px 0;
-          border-bottom: 1px solid #e6e6e6;
-          align-items: center;
-          @extend %item;
-          .name {
-            margin-left: 6px;
-          }
-          .notes {
-            margin-right: auto;
-            margin-left: 16px;
-            color: #999;
-          }
+        .name {
+          margin-left: 6px;
         }
+        .notes {
+          margin-right: auto;
+          margin-left: 16px;
+          color: #999;
+        }
+      }
+      .lastRecord {
+        border-bottom: 1px solid white;
       }
     }
   }

@@ -53,7 +53,8 @@
   }
   .bar {
     background: white;
-    height: 20px;
+    height: 10px;
+    flex-shrink: 0;
   }
   .notes {
     background: white;
@@ -61,6 +62,7 @@
     padding: 4px 0;
     display: flex;
     align-items: center;
+    flex-shrink: 0;
     .icon {
       width: 20px;
       height: 20px;

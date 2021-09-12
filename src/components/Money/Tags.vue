@@ -3,7 +3,7 @@
     <ul class="iconList">
       <li v-for="tag in filteredList" :key="tag.id">
         <div class="icon-wrapper"
-             :class="{selected: tag.id === selectedTag.id}" @click="select(tag)">
+             :class="liClass(tag)" @click="select(tag)">
           <Icon :name="`${tag.icon}`"/>
           <span>{{ tag.name }}</span>
         </div>
@@ -16,6 +16,7 @@
       </li>
     </ul>
   </div>
+
 </template>
 
 <script lang="ts">
@@ -35,6 +36,15 @@
       const {tagList} = this;
       return tagList.filter(t => t.type === this.tabsType);
     }
+    liClass(tag: Tag) {
+      if (!this.selectedTag.id || this.selectedTag.type !== this.tabsType) {
+        this.selectedTag = this.filteredList[0];
+        this.$emit('update:value', this.selectedTag);
+        return {selected: tag === this.filteredList[0]};
+      } else {
+        return {selected: tag.id === this.selectedTag.id};
+      }
+    }
     select(tag: Tag) {
       this.selectedTag = tag;
       this.$emit('update:value', this.selectedTag);
@@ -45,7 +55,7 @@
 <style lang="scss" scoped>
   @import "~@/assets/style/helper.scss";
   .scrollArea {
-    flex: 1;
+    flex-grow: 1;
     overflow: auto;
     background: white;
     .iconList {
@@ -60,7 +70,7 @@
         align-items: center;
         justify-content: center;
         .icon-wrapper {
-          border: 1px solid lightgray;
+          background: #f5f5f5;
           margin-bottom: 10px;
           border-radius: 10px;
           width: 80%;
@@ -83,4 +93,5 @@
       }
     }
   }
+
 </style>

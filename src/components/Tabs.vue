@@ -36,6 +36,7 @@
     background: $color-theme;
     display: flex;
     font-size: 22px;
+    flex-shrink: 0;
     &-item {
       width: 50%;
       height: 58px;
@@ -49,7 +50,7 @@
         bottom: 0;
         left: 25%;
         width: 50%;
-        height: 4px;
+        height: 3px;
         background: #333333;
       }
     }

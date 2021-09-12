@@ -27,6 +27,7 @@
     @extend %outerShadow;
     display: flex;
     font-size: 12px;
+    flex-shrink: 0;
     .item {
       padding: 6px 0;
       width: 33.33333%;

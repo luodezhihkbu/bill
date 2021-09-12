@@ -2,7 +2,8 @@
   <Layout>
     <Tabs :data-source="recordTypeList"></Tabs>
     <div class="tags">
-      <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in filteredList" :key="tag.id">
+      <router-link class="tag" :class="{lastTag: tag === filteredList[filteredList.length-1]}"
+                   :to="`/labels/edit/${tag.id}`" v-for="tag in filteredList" :key="tag.id">
         <Icon :name="`${tag.icon}`"/>
         <span class="name">{{ tag.name }}</span>
         <Icon name="right"/>
@@ -49,19 +50,9 @@
   .tags {
     overflow: auto;
     font-size: 16px;
-    position: relative;
     padding: 0 16px;
     margin-bottom: auto;
     background: white;
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: -16px;
-      width: 100%;
-      height: 1px;
-      background: white;
-    }
     .tag {
       min-height: 44px;
       display: flex;
@@ -76,6 +67,9 @@
         height: 18px;
         color: #666;
       }
+    }
+    .lastTag {
+      border-bottom: 1px solid white;
     }
   }
   .createTag-wrapper {

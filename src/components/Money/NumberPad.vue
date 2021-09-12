@@ -67,6 +67,7 @@
 <style lang="scss" scoped>
   @import "~@/assets/style/helper.scss";
   .numberPad {
+    flex-shrink: 0;
     .output {
       border-top: 1px solid #e6e6e6;
       font-size: 30px;
