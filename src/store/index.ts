@@ -21,6 +21,9 @@ const store = new Vuex.Store({
       if (!record.tags.id) {
         return window.alert('请选择一个类别');
       }
+      if (record.amount === 0) {
+        return window.alert('请输入金额');
+      }
       const record2: RecordItem = clone(record);
       record2.createdAt = new Date().toISOString();
       state.recordList.push(record2);
